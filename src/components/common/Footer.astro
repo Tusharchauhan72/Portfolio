@@ -1,0 +1,160 @@
+---
+import { profile } from '../../data/profile';
+import { site } from '../../data/site';
+import SocialIcons from './SocialIcons.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer-container py-12 px-4 border-t border-neon-pink/20 bg-gradient-to-b from-transparent to-[rgba(10,0,21,0.5)]" style="scroll-snap-align: start;">
+  <div class="footer-content max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- Logo and Copyright -->
+      <div class="flex items-center gap-4">
+        <div
+          class="w-10 h-10 rounded-full bg-gradient-to-br from-neon-pink to-neon-purple flex items-center justify-center text-white font-bold text-lg"
+          style="box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);"
+        >
+          LA
+        </div>
+        <div>
+          <p class="text-gray-400 text-sm">
+            &copy; {currentYear} {profile.name}. All rights reserved.
+          </p>
+          <p class="text-gray-500 text-xs">
+            {site.footer.tagline}
+          </p>
+        </div>
+      </div>
+
+      <!-- Social Links -->
+      <SocialIcons variant="minimal" size="lg" />
+    </div>
+
+    <!-- Footer Links -->
+    <div class="mt-8 flex flex-col items-center gap-4">
+      <div class="flex gap-6">
+        <a
+          href="/now"
+          class="text-gray-500 hover:text-neon-cyan transition-colors text-sm"
+        >
+          /now
+        </a>
+        <a
+          href="/uses"
+          class="text-gray-500 hover:text-neon-cyan transition-colors text-sm"
+        >
+          /uses
+        </a>
+        <a
+          href="/interview"
+          class="text-gray-500 hover:text-neon-cyan transition-colors text-sm"
+        >
+          /interview
+        </a>
+      </div>
+      <p class="text-gray-500 text-sm inline-flex items-center gap-2">
+         <a
+           href="https://dawnofthedevs.com/previous" class="hover:text-neon-pink transition-colors" aria-label="Previous Dawn of the Devs Webring site" title="Previous Dawn of the Devs Webring site">&larr;</a>
+         A <a href="https://dawnofthedevs.com" class="hover:text-neon-pink transition-colors" aria-label="Dawn of the Devs Webring Homepage" title="Dawn of the Devs Webring Homepage">Dawn of the Devs Webring</a>
+         <a href="https://dawnofthedevs.com/next" class="hover:text-neon-pink transition-colors" aria-label="Next Dawn of the Devs Webring site" title="Next Dawn of the Devs Webring site">&rarr;</a>
+         <a href="https://dawnofthedevs.com/random" class="hover:text-neon-pink transition-colors" aria-label="Random Dawn of the Devs Webring site" title="Random Dawn of the Devs Webring site">&#x21AF;</a>
+      </p>
+      <p class="text-gray-500 text-sm inline-flex items-center gap-2">
+        <a href="https://xn--sr8hvo.ws/previous" class="hover:text-neon-pink transition-colors" aria-label="Previous IndieWeb Webring site">&larr;</a>
+         An <a href="https://xn--sr8hvo.ws" class="hover:text-neon-pink transition-colors">IndieWeb Webring</a>
+        <a href="https://xn--sr8hvo.ws/next" class="hover:text-neon-pink transition-colors" aria-label="Next IndieWeb Webring site">&rarr;</a>
+      </p>
+      <p class="text-gray-500 text-sm inline-flex items-center gap-2">
+        <a href="https://webri.ng/webring/cssjoy/previous?via=https%3A%2F%2Ftusharchauhan.com" class="hover:text-neon-pink transition-colors" aria-label="Previous CSS Joy Webring site">&larr;</a>
+         A <a href="https://webri.ng/webring/cssjoy" class="hover:text-neon-pink transition-colors">CSS Joy Webring</a>
+        <a href="https://webri.ng/webring/cssjoy/next?via=https%3A%2F%2Ftusharchauhan.com" class="hover:text-neon-pink transition-colors" aria-label="Next CSS Joy Webring site">&rarr;</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Footer slide up animation
+  let footerCleanup: (() => void) | undefined;
+
+  function initFooterAnimation() {
+    const footer = document.querySelector('.footer-content') as HTMLElement;
+
+    if (!footer) return () => {};
+
+    // Skip if animations disabled
+    if (document.documentElement.getAttribute('data-animations') === 'disabled') {
+      footer.classList.add('visible');
+      return () => {};
+    }
+
+    let ticking = false;
+
+    const checkFooter = () => {
+      const viewportHeight = window.innerHeight;
+      const triggerPoint = viewportHeight * 0.9;
+      const exitPoint = viewportHeight * 0.95;
+
+      const footerRect = footer.getBoundingClientRect();
+
+      if (footerRect.top < triggerPoint) {
+        footer.classList.add('visible');
+      }
+
+      if (footerRect.top > exitPoint) {
+        footer.classList.remove('visible');
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(checkFooter);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    checkFooter();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }
+
+  function initFooter() {
+    footerCleanup?.();
+    footerCleanup = initFooterAnimation();
+  }
+
+  initFooter();
+  document.addEventListener('astro:after-swap', initFooter);
+
+  window.addEventListener('animations-change', () => {
+    footerCleanup?.();
+    footerCleanup = initFooterAnimation();
+  });
+</script>
+
+<style>
+  /* Footer slides up from bottom */
+  .footer-content {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .footer-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Disable animations when preference set */
+  [data-animations="disabled"] .footer-content {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+</style>

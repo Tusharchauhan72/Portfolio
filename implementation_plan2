@@ -1,0 +1,475 @@
+# Portfolio Rebranding Plan: Leo Ashcraft → Tushar Chauhan
+
+This document details the exact content replacements to convert the portfolio into **Tushar Chauhan's** personal developer portfolio while strictly preserving the visual design, animations, theme, and layout architecture.
+
+---
+
+## 🔒 Design & Architecture Constraints
+- **Design & Layout**: No changes to CSS, components, spacing, animations, colors, fonts, or responsive rules.
+- **Data-Driven Architecture**: All text, links, metadata, and lists are replaced within `src/data/` files only.
+
+---
+
+## 📝 Exact File Replacement Specifications
+
+### 1. `src/data/profile.ts`
+
+```typescript
+export const profile = {
+  name: 'Tushar Chauhan',
+  title: 'B.Tech CSE Student | Aspiring Full Stack Developer | DevOps Learner',
+  location: 'Punjab, India',
+  tagline: 'Building practical software, solving problems, and growing as a developer every day.',
+  description:
+    'Computer Science student at Lovely Professional University focused on Full Stack Development, Data Structures & Algorithms, and DevOps.',
+  bio: `I am a Computer Science student at Lovely Professional University with a strong interest in Full Stack Development, Data Structures & Algorithms, and DevOps. I enjoy building practical software solutions, participating in hackathons, and continuously improving my problem-solving and development skills.`,
+
+  availability: ['Open to Internships', 'Hackathons & Collaborations'],
+
+  contact: {
+    phone: { area: '', number: '' },
+    email: { user: 'nahcuhahsruht', website: 'moc.liamg' }, // Reversed anti-spam
+  },
+
+  social: {
+    linkedin: 'https://www.linkedin.com/in/tushar-chauhan-13504536b',
+    github: 'https://github.com/Tusharchauhan72',
+  },
+
+  stats: [
+    { value: 1, suffix: 'st Year', label: 'B.Tech CSE @ LPU' },
+    { value: 3, suffix: '+', label: 'Projects Built' },
+    { value: 100, suffix: '+', label: 'DSA Problems Solved' },
+    { value: 1, suffix: '', label: 'Certifications' },
+  ],
+
+  resumeUrl: '/Tushar-Chauhan-Resume.pdf',
+  photoUrl: '/img/selfie.avif',
+  avatarUrl: '/img/pic.webp',
+} as const;
+
+export type Profile = typeof profile;
+```
+
+---
+
+### 2. `src/data/hero.ts`
+
+```typescript
+export const heroTitles = [
+  'B.Tech CSE Student',
+  'Aspiring Full Stack Developer',
+  'DSA & C++ Enthusiast',
+  'DevOps Learner',
+] as const;
+
+export type HeroTitle = (typeof heroTitles)[number];
+```
+
+---
+
+### 3. `src/data/projects.ts`
+
+```typescript
+export interface SubSubProject {
+  title: string;
+  description: string;
+  image: string;
+  live?: string;
+}
+
+export interface SubProject {
+  title: string;
+  description: string;
+  image: string;
+  live?: string;
+  subProjects?: SubSubProject[];
+}
+
+export interface Project {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  metrics: string[];
+  github: string | null;
+  live: string | null;
+  featured: boolean;
+  subProjects?: SubProject[];
+}
+
+export const projects: Project[] = [
+  {
+    title: 'AgroGuard',
+    description:
+      'IoT-based smart agriculture monitoring system using ESP32, soil moisture sensors, DHT11 sensors, ultrasonic sensors, and automated irrigation control.',
+    image: '/img/featured/featured-parker.avif',
+    tags: ['ESP32', 'Arduino', 'IoT', 'Sensors', 'C++'],
+    metrics: ['Automated Irrigation', 'Real-Time Sensor Monitoring'],
+    github: 'https://github.com/Tusharchauhan72',
+    live: null,
+    featured: true,
+  },
+  {
+    title: 'DSA Repository',
+    description:
+      'A personal repository containing DSA solutions, pattern-based learning notes, and problem-solving approaches in C++.',
+    image: '/img/featured/featured-roadtrip.avif',
+    tags: ['C++', 'Data Structures', 'Algorithms', 'Git'],
+    metrics: ['Pattern-Based Solutions', 'Optimized Complexity'],
+    github: 'https://github.com/Tusharchauhan72',
+    live: null,
+    featured: true,
+  },
+  {
+    title: 'Personal Portfolio',
+    description:
+      'Modern developer portfolio built using Astro to showcase projects, skills, and technical growth.',
+    image: '/img/featured/featured-navarro.avif',
+    tags: ['Astro', 'TypeScript', 'Tailwind CSS', 'HTML5/CSS3'],
+    metrics: ['Fast Performance', 'Responsive Arcade Theme'],
+    github: 'https://github.com/Tusharchauhan72',
+    live: null,
+    featured: true,
+  },
+];
+
+export const featuredProjects = projects.filter((p) => p.featured);
+export const otherProjects = projects.filter((p) => !p.featured);
+```
+
+---
+
+### 4. `src/data/skills.ts`
+
+```typescript
+export interface Skill {
+  name: string;
+  level: number; // 0-100
+  category: 'language' | 'framework' | 'tool' | 'platform';
+  icon?: string;
+}
+
+export interface SkillCategory {
+  name: string;
+  skills: Skill[];
+}
+
+export const skills: SkillCategory[] = [
+  {
+    name: 'Programming Languages',
+    skills: [
+      { name: 'C++', level: 85, category: 'language' },
+      { name: 'C', level: 80, category: 'language' },
+      { name: 'Python', level: 75, category: 'language' },
+      { name: 'JavaScript', level: 75, category: 'language' },
+      { name: 'HTML5/CSS3', level: 85, category: 'language' },
+    ],
+  },
+  {
+    name: 'Frontend & Backend',
+    skills: [
+      { name: 'HTML5', level: 90, category: 'framework' },
+      { name: 'CSS3', level: 85, category: 'framework' },
+      { name: 'JavaScript', level: 80, category: 'framework' },
+      { name: 'Firebase', level: 70, category: 'framework' },
+      { name: 'MySQL', level: 75, category: 'framework' },
+    ],
+  },
+  {
+    name: 'Tools & Core Areas',
+    skills: [
+      { name: 'Git & GitHub', level: 85, category: 'tool' },
+      { name: 'VS Code', level: 90, category: 'tool' },
+      { name: 'Data Structures & Algorithms', level: 85, category: 'tool' },
+      { name: 'DevOps Fundamentals', level: 65, category: 'platform' },
+    ],
+  },
+];
+
+export const technologies = [
+  'C++',
+  'C',
+  'Python',
+  'JavaScript',
+  'HTML5',
+  'CSS3',
+  'Firebase',
+  'MySQL',
+  'Git',
+  'GitHub',
+  'VS Code',
+  'ESP32',
+  'IoT',
+  'Data Structures',
+  'Algorithms',
+  'DevOps',
+] as const;
+
+export type Technology = (typeof technologies)[number];
+
+export const services = [
+  {
+    title: 'Full Stack Web Development',
+    description:
+      'Building <span class="hover-underline-trigger">responsive, modern web applications</span> using clean HTML, CSS, JavaScript, and database backends like Firebase and MySQL. Focused on intuitive UI/UX and efficient code structure.',
+    icon: 'code',
+    features: [
+      'Responsive Web Interfaces',
+      'Firebase Backend Integration',
+      'Database Modeling (MySQL)',
+      'Modern Frontend Layouts',
+    ],
+  },
+  {
+    title: 'Data Structures & Problem Solving',
+    description:
+      'Applying strong algorithmic thinking and <span class="hover-underline-trigger">optimized C++ data structures</span> to solve complex computational problems and build efficient software routines.',
+    icon: 'puzzle',
+    features: [
+      'C++ Algorithmic Problem Solving',
+      'Time & Space Complexity Optimization',
+      'Pattern-Based Learning',
+      'Competitive Coding Practice',
+    ],
+  },
+  {
+    title: 'DevOps & Version Control',
+    description:
+      'Utilizing <span class="hover-underline-trigger">Git and GitHub workflows</span> for clean code management, collaborative version control, and learning continuous delivery principles.',
+    icon: 'cloud',
+    features: [
+      'Git Workflow & GitHub Actions',
+      'Repository Structure & Docs',
+      'Linux Command Line Basics',
+      'DevOps CI/CD Concepts',
+    ],
+  },
+  {
+    title: 'IoT & Hardware Systems',
+    description:
+      'Creating <span class="hover-underline-trigger">smart IoT solutions</span> combining ESP32 microcontrollers, environmental sensors, and automated logic to bridge software with physical hardware.',
+    icon: 'palette',
+    features: [
+      'ESP32 & Arduino Programming',
+      'Sensor Integration (DHT11, Soil, Ultrasonic)',
+      'Automated Hardware Logic',
+    ],
+  },
+];
+```
+
+---
+
+### 5. `src/data/experience.ts`
+
+```typescript
+export interface Experience {
+  company: string;
+  position: string;
+  period: string;
+  startDate: string;
+  endDate: string | 'Current';
+  location?: string;
+  highlights: string[];
+}
+
+export const experience: Experience[] = [
+  {
+    company: 'Lovely Professional University',
+    position: 'B.Tech CSE Student & Developer',
+    period: '2024 - Present',
+    startDate: '2024-08',
+    endDate: 'Current',
+    location: 'Punjab, India',
+    highlights: [
+      'Pursuing B.Tech in Computer Science and Engineering with focus on Full Stack Development and DSA.',
+      'Developed IoT-based smart agricultural system AgroGuard using ESP32 and automated sensor controls.',
+      'Maintained active Data Structures & Algorithms problem-solving repository in C++ on GitHub.',
+      'Participated in university technical workshops, hackathons, and collaborative projects.',
+    ],
+  },
+];
+
+export interface Education {
+  institution: string;
+  degree: string;
+  year: string;
+  description: string;
+  skills: string[];
+  credentialUrl?: string;
+}
+
+export const education: Education[] = [
+  {
+    institution: 'Lovely Professional University',
+    degree: 'Bachelor of Technology (B.Tech) - Computer Science & Engineering',
+    year: '2024 - 2028',
+    description:
+      'Focusing on Computer Science core fundamentals: Data Structures, Object-Oriented Programming, Database Systems, Web Engineering, and DevOps.',
+    skills: ['C++', 'C', 'Python', 'JavaScript', 'Data Structures', 'Git'],
+  },
+];
+
+export const certifications = [
+  {
+    name: 'Time Management',
+    issuer: 'Infosys Springboard',
+    year: '2024',
+    credentialId: 'Verified',
+  },
+];
+
+export const passions = [
+  {
+    name: 'Full Stack Web Dev',
+    description: 'Creating clean, responsive, and functional web applications from scratch.',
+    icon: '🌐',
+  },
+  {
+    name: 'Data Structures & Algorithms',
+    description: 'Mastering C++ problem solving and algorithmic efficiency.',
+    icon: '🧩',
+  },
+  {
+    name: 'DevOps & Linux',
+    description: 'Exploring automation, CI/CD pipelines, and cloud deployment.',
+    icon: '🤖',
+  },
+  {
+    name: 'Hackathons',
+    description: 'Collaborating in high-energy teams to turn ideas into working software.',
+    icon: '⚡',
+  },
+  {
+    name: 'Continuous Learning',
+    description: 'Consistently picking up new tools, languages, and technical frameworks.',
+    icon: '📚',
+  },
+];
+```
+
+---
+
+### 6. `src/data/seo.ts`
+
+```typescript
+export const seo = {
+  siteTitle: 'Tushar Chauhan | B.Tech CSE Student & Aspiring Full Stack Developer',
+  siteDescription:
+    'Portfolio of Tushar Chauhan, Computer Science student at Lovely Professional University specializing in Full Stack Development, C++ DSA, and DevOps.',
+  keywords:
+    'Tushar Chauhan, B.Tech CSE, Lovely Professional University, Full Stack Developer, C++, DSA, Firebase, Astro, Web Development, DevOps, AgroGuard',
+  themeColor: '#0a0a0f',
+} as const;
+
+export const schema = {
+  personId: 'https://github.com/Tusharchauhan72#person',
+  jobTitle: 'B.Tech CSE Student & Aspiring Full Stack Developer',
+  worksFor: {
+    type: 'Organization' as const,
+    name: 'Lovely Professional University',
+    url: 'https://www.lpu.in',
+  },
+  address: {
+    type: 'PostalAddress' as const,
+    addressLocality: 'Punjab',
+    addressRegion: 'Punjab',
+    addressCountry: 'IN',
+  },
+  knowsAbout: [
+    'Computer Science',
+    'Full Stack Development',
+    'Data Structures & Algorithms',
+    'C++',
+    'C',
+    'Python',
+    'JavaScript',
+    'HTML5',
+    'CSS3',
+    'Firebase',
+    'MySQL',
+    'Git',
+    'GitHub',
+    'DevOps',
+    'ESP32',
+    'IoT',
+    'Astro',
+  ],
+  sameAs: [
+    'https://github.com/Tusharchauhan72',
+    'https://www.linkedin.com/in/tushar-chauhan-13504536b',
+  ],
+} as const;
+
+export type SEO = typeof seo;
+export type Schema = typeof schema;
+```
+
+---
+
+### 7. `src/data/site.ts`
+
+```typescript
+export const site = {
+  footer: {
+    tagline: 'Built with Astro & passion for software engineering.',
+    disclaimer:
+      'Portfolio of Tushar Chauhan — B.Tech CSE Student at Lovely Professional University.',
+  },
+  sections: {
+    about: {
+      title: 'About',
+      titleHighlight: 'Me',
+      subtitle: 'B.Tech CSE student passionate about Web Dev & Problem Solving',
+      availabilityText: 'Open to internships & hackathons',
+      skillsTitle: 'Technical',
+      skillsTitleHighlight: 'Skills',
+      servicesTitle: 'About',
+      servicesTitleHighlight: 'Me',
+    },
+    experience: {
+      title: 'Academic &',
+      titleHighlight: 'Experience',
+      subtitle: 'My journey in computer science & software engineering',
+      educationTitle: 'Education &',
+      educationTitleHighlight: 'Certifications',
+    },
+    projects: {
+      title: 'Featured',
+      titleHighlight: 'Projects',
+      subtitle: 'Practical software and hardware projects I have built',
+      otherTitle: 'More',
+      otherTitleHighlight: 'Work',
+    },
+    contact: {
+      title: 'Get In',
+      titleHighlight: 'Touch',
+      subtitle: 'Interested in working together or collaborating on hackathons? Let\'s talk!',
+      connectTitle: 'Let\'s Connect',
+      connectDescription:
+        'I\'m open to internships, open-source projects, hackathon teams, and networking with fellow developers. Feel free to reach out!',
+      formTitle: 'Send a Message',
+    },
+  },
+} as const;
+
+export type Site = typeof site;
+```
+
+---
+
+## 🎯 Additional Recommendations & Missing Information Analysis
+
+As a 1st-year B.Tech CSE student at Lovely Professional University targeting Full Stack Development, DSA, DevOps, and Hackathons, adding the following will elevate your portfolio from a student profile to a high-impact developer presence:
+
+### 1. Missing Information to Consider Adding
+1. **LeetCode / CodeChef Profile Links**: Since you highlight DSA in C++, adding your LeetCode, CodeChef, or HackerRank handles to social links will immediately validate your problem-solving experience to recruiters.
+2. **Hackathon Achievements**: Mentioning specific hackathons (e.g., LPU Hackathons, Smart India Hackathon, or online dev sprints) under experience or projects.
+3. **AgroGuard Live Demo / Video / Circuit Diagram**: Adding a link to a demo video, Tinkercad simulation, or GitHub repo for AgroGuard to make it visually interactive.
+4. **Email Address**: Providing a direct contact email string (e.g., `tusharchauhan@example.com`).
+
+### 2. Professional Portfolio Enhancements for a 1st-Year Student
+- **Highlight Problem Solving Metric**: Showcase stats like "100+ Problems Solved on LeetCode/GeeksforGeeks".
+- **DevOps Learning Roadmap Section**: Show active learning in Docker, Linux, and GitHub Actions CI/CD to demonstrate initiative ahead of your coursework.
+- **Clean Profile Photo**: Replace the generic fallback profile photo in `public/img/selfie.avif` with your personal headshot.

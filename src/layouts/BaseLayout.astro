@@ -1,0 +1,485 @@
+---
+import '../styles/global.css';
+import SEOHead from '../components/common/SEOHead.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import CustomCursor from '../components/common/CustomCursor.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  snapScroll?: boolean;
+}
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class={`dark${props.snapScroll ? ' snap-scroll' : ''}`}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEOHead {...props} />
+    <!-- Prevent flash of wrong theme/animations -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('portfolio-theme') || 'normal';
+        document.documentElement.setAttribute('data-theme', theme);
+
+        const animations = localStorage.getItem('portfolio-animations');
+        document.documentElement.setAttribute('data-animations', animations === 'disabled' ? 'disabled' : 'enabled');
+
+        const sounds = localStorage.getItem('portfolio-sounds');
+        document.documentElement.setAttribute('data-sounds', sounds === 'disabled' ? 'disabled' : 'enabled');
+
+        // Unlock Web Audio on first user gesture so scroll-triggered sounds work.
+        // Browsers block audio.play() unless a user gesture has occurred first.
+        // We create and play a silent buffer on the first click/touch/keydown,
+        // which unlocks the audio context for all subsequent play() calls.
+        var unlocked = false;
+        function unlockAudio() {
+          if (unlocked) return;
+          unlocked = true;
+          var ctx = new (window.AudioContext || window.webkitAudioContext)();
+          var buf = ctx.createBuffer(1, 1, 22050);
+          var src = ctx.createBufferSource();
+          src.buffer = buf;
+          src.connect(ctx.destination);
+          src.start(0);
+          // Also try playing a silent HTML audio element to unlock that path
+          var a = new Audio();
+          a.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
+          a.play().catch(function(){});
+          document.removeEventListener('click', unlockAudio, true);
+          document.removeEventListener('touchstart', unlockAudio, true);
+          document.removeEventListener('keydown', unlockAudio, true);
+        }
+        document.addEventListener('click', unlockAudio, true);
+        document.addEventListener('touchstart', unlockAudio, true);
+        document.addEventListener('keydown', unlockAudio, true);
+      })();
+    </script>
+  </head>
+  <body class="custom-cursor">
+    <!-- Skip to main content (Accessibility) -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+
+    <!-- Custom Cursor -->
+    <CustomCursor />
+
+    <!-- Header/Navigation -->
+    <Header />
+
+    <!-- Main Content -->
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+
+    <!-- Back to Top Button -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-neon-pink/20 border border-neon-pink/40 text-neon-pink opacity-0 invisible translate-y-4 transition-all duration-300 hover:bg-neon-pink/30 hover:border-neon-pink/60 hover:scale-110 z-50 flex items-center justify-center"
+      aria-label="Back to top"
+      style="box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+
+    <script>
+      function initBackToTop() {
+        const btn = document.getElementById('back-to-top');
+        if (!btn) return;
+
+        const showThreshold = 400;
+
+        function updateButton() {
+          if (window.scrollY > showThreshold) {
+            btn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+            btn.classList.add('opacity-100', 'visible', 'translate-y-0');
+          } else {
+            btn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            btn.classList.add('opacity-0', 'invisible', 'translate-y-4');
+          }
+        }
+
+        window.addEventListener('scroll', updateButton, { passive: true });
+        updateButton();
+
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Arrow wiggle animation every 10 seconds
+        function triggerWiggle() {
+          if (!btn.classList.contains('invisible')) {
+            btn.classList.add('arrow-wiggle');
+            setTimeout(() => {
+              btn.classList.remove('arrow-wiggle');
+            }, 1200); // Animation duration
+          }
+        }
+
+        setInterval(triggerWiggle, 10000);
+      }
+
+      function initSectionTitleWave() {
+        // Target section titles, hero title, and subsection titles
+        const titles = document.querySelectorAll('.section-title, .hero-title, .subsection-title');
+        const subsectionTitles = document.querySelectorAll('.subsection-title');
+        const animatedTitles = new Set<Element>();
+
+        // Function to collect ALL text content and wrap in letter spans
+        function wrapAllLetters(element: Element): HTMLSpanElement[] {
+          const allLetterSpans: HTMLSpanElement[] = [];
+
+          function processNode(node: Node, parentElement: Element | null) {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent) {
+              const text = node.textContent;
+              const fragment = document.createDocumentFragment();
+
+              // Check if any ancestor has gradient-text class and get its gradient
+              const gradientAncestor = parentElement?.closest('.gradient-text, .gradient-text-animated');
+              const isGradient = !!gradientAncestor;
+              let gradientStyle = '';
+              if (isGradient && gradientAncestor) {
+                gradientStyle = getComputedStyle(gradientAncestor).backgroundImage;
+              }
+
+              for (const char of text) {
+                if (char === ' ' || char === '\n' || char === '\t') {
+                  fragment.appendChild(document.createTextNode(char));
+                } else {
+                  const span = document.createElement('span');
+                  span.className = 'wave-letter';
+                  span.style.display = 'inline-block';
+                  span.textContent = char;
+
+                  // If inside gradient-text, apply gradient to each letter
+                  if (isGradient && gradientStyle) {
+                    span.style.backgroundImage = gradientStyle;
+                    span.style.backgroundClip = 'text';
+                    span.style.webkitBackgroundClip = 'text';
+                    span.style.color = 'transparent';
+                  }
+
+                  fragment.appendChild(span);
+                  allLetterSpans.push(span);
+                }
+              }
+
+              node.replaceWith(fragment);
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              // Process children of element nodes (like gradient-text spans)
+              const el = node as Element;
+              const children = Array.from(el.childNodes);
+              children.forEach(child => processNode(child, el));
+            }
+          }
+
+          const childNodes = Array.from(element.childNodes);
+          childNodes.forEach(child => processNode(child, null));
+
+          return allLetterSpans;
+        }
+
+        // Function to animate subtitle words (103% grow)
+        function animateSubtitleWords(subtitleEl: Element | null) {
+          if (!subtitleEl) return;
+          if (document.documentElement.getAttribute('data-animations') === 'disabled') return;
+          const words = subtitleEl.querySelectorAll('.subtitle-word') as NodeListOf<HTMLElement>;
+          if (words.length === 0) return;
+
+          const wordDelay = 80;
+
+          // Reset all words first
+          words.forEach((word) => {
+            word.style.transition = 'none';
+            word.style.transform = 'scale(1)';
+          });
+          void words[0]?.offsetHeight;
+
+          // Animate each word sequentially
+          words.forEach((word, index) => {
+            setTimeout(() => {
+              word.style.transition = 'transform 200ms ease-out';
+              word.style.transform = 'scale(1.03)';
+              setTimeout(() => {
+                word.style.transform = 'scale(1)';
+              }, 200);
+            }, index * wordDelay);
+          });
+        }
+
+        // Function to animate using direct style manipulation
+        function animateWave(letters: HTMLSpanElement[], subtitleEl?: Element | null) {
+          if (document.documentElement.getAttribute('data-animations') === 'disabled') return;
+          const delayIncrement = 50;
+          const waveDuration = 400;
+          const sheenDelayIncrement = 30;
+          const sheenDuration = 300;
+
+          // Reset all letters first (for re-animation)
+          letters.forEach((letter) => {
+            letter.style.transition = 'none';
+            letter.style.transform = 'scale(1)';
+            letter.style.filter = '';
+          });
+
+          // Force reflow to ensure reset is applied
+          void letters[0]?.offsetHeight;
+
+          // Wave animation - scale each letter
+          letters.forEach((letter, index) => {
+            const delay = index * delayIncrement;
+
+            setTimeout(() => {
+              letter.style.transition = `transform ${waveDuration}ms ease-in-out`;
+              letter.style.transform = 'scale(1.4)';
+
+              setTimeout(() => {
+                letter.style.transform = 'scale(1)';
+              }, waveDuration / 2);
+            }, delay);
+          });
+
+          // Sheen animation - brightness filter sweep
+          const totalWaveTime = letters.length * delayIncrement + waveDuration;
+          setTimeout(() => {
+            letters.forEach((letter, index) => {
+              const sheenDelay = index * sheenDelayIncrement;
+
+              setTimeout(() => {
+                letter.style.transition = `filter ${sheenDuration}ms ease-in-out`;
+                letter.style.filter = 'brightness(1.5) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6))';
+
+                setTimeout(() => {
+                  letter.style.filter = '';
+                }, sheenDuration / 2);
+              }, sheenDelay);
+            });
+          }, totalWaveTime);
+
+          // Animate subtitle words after title animation completes
+          const totalTitleAnimTime = totalWaveTime + (letters.length * sheenDelayIncrement) + sheenDuration;
+          setTimeout(() => {
+            animateSubtitleWords(subtitleEl || null);
+          }, totalTitleAnimTime);
+        }
+
+        // Store wrapped letters for each title so we can re-animate
+        const titleLettersMap = new Map<Element, HTMLSpanElement[]>();
+
+        // Track pending nav animations to prevent observer conflicts
+        const pendingNavAnimation = new Set<Element>();
+
+        // Intersection Observer to trigger animation
+        const observer = new IntersectionObserver(
+          (entries) => {
+            // Skip all animations if disabled
+            if (document.documentElement.getAttribute('data-animations') === 'disabled') return;
+
+            entries.forEach((entry) => {
+              // Skip if pending nav animation or already animated
+              if (entry.isIntersecting && !animatedTitles.has(entry.target) && !pendingNavAnimation.has(entry.target)) {
+                animatedTitles.add(entry.target);
+
+                // Wrap letters and get them in order (only once)
+                let letters = titleLettersMap.get(entry.target);
+                if (!letters) {
+                  letters = wrapAllLetters(entry.target);
+                  titleLettersMap.set(entry.target, letters);
+                }
+
+                // Find the associated subtitle (next sibling with .section-subtitle class)
+                const parent = entry.target.parentElement;
+                const subtitleEl = parent?.querySelector('.section-subtitle');
+
+                // Small delay before starting animation
+                setTimeout(() => {
+                  animateWave(letters!, subtitleEl);
+                }, 200);
+              }
+            });
+          },
+          {
+            threshold: 0.5,
+            rootMargin: '0px 0px -10% 0px'
+          }
+        );
+
+        titles.forEach((title) => {
+          observer.observe(title);
+        });
+
+        // Function to reset all subsection titles so they can animate again
+        function resetAllSubsectionTitles() {
+          subsectionTitles.forEach((title) => {
+            animatedTitles.delete(title);
+            pendingNavAnimation.delete(title);
+          });
+        }
+
+        // Listen for nav link clicks to re-trigger animation
+        document.querySelectorAll('a[href*="#"]').forEach((link) => {
+          link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // Reset all subsection titles on any nav click
+            resetAllSubsectionTitles();
+
+            let targetSection: Element | null = null;
+
+            // Handle # or /# (home/top) - find hero section
+            if (href === '#' || href === '/#') {
+              targetSection = document.getElementById('home');
+            } else {
+              // Extract the ID from href (handles both #about and /#about)
+              const hashIndex = href.indexOf('#');
+              if (hashIndex === -1) return;
+              const targetId = href.slice(hashIndex + 1);
+              targetSection = document.getElementById(targetId);
+            }
+
+            if (!targetSection) return;
+
+            // Find the section title within the target section
+            const sectionTitle = targetSection.querySelector('.section-title, .hero-title');
+            if (!sectionTitle) return;
+
+            // Find the associated subtitle
+            const parent = sectionTitle.parentElement;
+            const subtitleEl = parent?.querySelector('.section-subtitle');
+
+            // Mark as pending to block observer, keep in animatedTitles
+            pendingNavAnimation.add(sectionTitle);
+
+            // Get or create wrapped letters
+            let letters = titleLettersMap.get(sectionTitle);
+            if (!letters) {
+              letters = wrapAllLetters(sectionTitle);
+              titleLettersMap.set(sectionTitle, letters);
+            }
+
+            // Delay animation to let scroll complete
+            setTimeout(() => {
+              pendingNavAnimation.delete(sectionTitle);
+              animateWave(letters!, subtitleEl);
+            }, 1000);
+          });
+        });
+
+        // Listen for back-to-top button click to reset subsection titles and hero animations
+        const backToTopBtn = document.getElementById('back-to-top');
+        if (backToTopBtn) {
+          backToTopBtn.addEventListener('click', () => {
+            resetAllSubsectionTitles();
+
+            // Trigger hero title animation
+            const heroSection = document.getElementById('home');
+            if (heroSection) {
+              const heroTitle = heroSection.querySelector('.hero-title');
+              if (heroTitle) {
+                let letters = titleLettersMap.get(heroTitle);
+                if (!letters) {
+                  letters = wrapAllLetters(heroTitle);
+                  titleLettersMap.set(heroTitle, letters);
+                }
+                setTimeout(() => {
+                  animateWave(letters!, null);
+                }, 800);
+              }
+            }
+
+            // Dispatch event for tagline animation (handled in HeroSection)
+            window.dispatchEvent(new CustomEvent('reset-hero-tagline'));
+          });
+        }
+      }
+
+      function initMobileCardFloat() {
+        // Only run on mobile (< 768px)
+        if (window.innerWidth >= 768) return;
+
+        const cards = document.querySelectorAll('.card');
+        if (cards.length === 0) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('float-active');
+              } else {
+                entry.target.classList.remove('float-active');
+              }
+            });
+          },
+          {
+            threshold: 0.3,
+            rootMargin: '0px 0px -10% 0px'
+          }
+        );
+
+        cards.forEach((card) => {
+          observer.observe(card);
+        });
+
+        // Store observer for cleanup on resize
+        return observer;
+      }
+
+      let mobileCardObserver: IntersectionObserver | undefined;
+
+      function handleMobileCardFloat() {
+        // Clean up existing observer
+        if (mobileCardObserver) {
+          mobileCardObserver.disconnect();
+          // Remove float-active from all cards
+          document.querySelectorAll('.card.float-active').forEach((card) => {
+            card.classList.remove('float-active');
+          });
+        }
+        mobileCardObserver = initMobileCardFloat();
+      }
+
+      initBackToTop();
+      initSectionTitleWave();
+      handleMobileCardFloat();
+
+      // Re-check on resize (debounced)
+      let resizeTimeout: ReturnType<typeof setTimeout>;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(handleMobileCardFloat, 250);
+      });
+
+      document.addEventListener('astro:after-swap', () => {
+        initBackToTop();
+        initSectionTitleWave();
+        handleMobileCardFloat();
+      });
+
+      // Scroll-snap sound removed — sounds are now handled
+      // by the individual horizontal scroll sections
+    </script>
+
+    <script>
+      import { initKeyboardNav } from '../lib/keyboard-nav';
+      initKeyboardNav();
+      document.addEventListener('astro:after-swap', initKeyboardNav);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,242 @@
+---
+import { education, certifications } from '../../data/experience';
+import { site } from '../../data/site';
+
+const quizOffCert = certifications.find((c) => c.name.includes('QuizOff')) || certifications[0];
+---
+
+<section id="education" class="education-section section section-arcade-alt" aria-labelledby="education-heading">
+  <div class="education-inner max-w-6xl mx-auto relative z-10 px-4">
+    <h3 id="education-heading" class="subsection-title education-title text-2xl font-bold text-white text-center mb-8">
+      {site.sections.experience.educationTitle} <span class="gradient-text">{site.sections.experience.educationTitleHighlight}</span>
+    </h3>
+
+    <div class="education-grid max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Existing B.Tech Education Card - UNCHANGED */}
+      {
+        education.map((edu, index) => (
+          <div class={`card relative edu-card edu-card-${index} flex flex-col`}>
+            <span class="absolute top-4 right-4 text-sm text-gray-400 bg-night-700 px-3 py-1 rounded-full year-counter" data-target-year={edu.year}>
+              2000
+            </span>
+            <p class="text-lg font-bold text-white edu-degree-title mb-4">{edu.degree}</p>
+
+            <div class="flex-1 flex flex-col justify-end">
+              <p class="text-neon-yellow mb-2">
+                {edu.institution}
+              </p>
+              <p class="text-gray-400 text-sm mb-4">{edu.description}</p>
+
+              <div class="flex flex-wrap items-center gap-2">
+                {edu.skills.map((skill) => (
+                  <span class="px-3 py-1 text-xs bg-neon-pink/10 text-neon-pink rounded-full border border-neon-pink/20">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+
+      {/* QuizOff 2026 Certification Card */}
+      <div class="card relative edu-card edu-card-1 flex flex-col">
+        <span class="absolute top-4 right-4 text-sm text-gray-400 bg-night-700 px-3 py-1 rounded-full year-counter" data-target-year={quizOffCert.year}>
+          2000
+        </span>
+        <p class="text-lg font-bold text-white edu-degree-title mb-1">{quizOffCert.name}</p>
+
+        <p class="text-neon-yellow text-sm font-medium mb-3">
+          {quizOffCert.issuer} <span class="text-gray-500 text-xs ml-1">• July 2026</span>
+        </p>
+
+        {/* Certificate Image Thumbnail */}
+        {quizOffCert.image && (
+          <div class="mb-4">
+            <button
+              type="button"
+              id="open-cert-modal"
+              class="group relative block w-full rounded-xl overflow-hidden border border-neon-pink/20 hover:border-neon-pink/50 transition-all duration-300 cursor-pointer text-left bg-black/40 focus:outline-none focus:ring-2 focus:ring-neon-pink"
+              aria-label="View full-size certificate"
+            >
+              <img
+                src={quizOffCert.image}
+                alt={quizOffCert.name}
+                class="w-full h-40 object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-night-900/90 via-night-900/30 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span class="inline-flex items-center gap-2 text-xs font-mono text-white bg-night-800/90 px-3 py-1.5 rounded-lg border border-neon-pink/40 shadow-lg">
+                  <svg class="w-4 h-4 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                  View Certificate
+                </span>
+              </div>
+            </button>
+          </div>
+        )}
+
+        <p class="text-gray-400 text-sm mb-4">{quizOffCert.description}</p>
+
+        {/* Tags */}
+        <div class="mt-auto flex flex-wrap items-center gap-2">
+          {quizOffCert.tags?.map((tag) => (
+            <span class="px-3 py-1 text-xs bg-neon-pink/10 text-neon-pink rounded-full border border-neon-pink/20 font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Full-Size Certificate Preview Modal */}
+  <div
+    id="cert-image-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-night-900/90 backdrop-blur-md transition-opacity duration-300"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Certificate Image Preview"
+  >
+    <div class="relative max-w-4xl w-full bg-night-800 border border-neon-pink/30 rounded-2xl p-4 md:p-6 shadow-2xl overflow-hidden flex flex-col items-center">
+      <div class="flex items-center justify-between w-full pb-3 border-b border-neon-pink/20 mb-4">
+        <h4 class="text-white text-base md:text-lg font-bold truncate pr-4">{quizOffCert.name}</h4>
+        <button
+          type="button"
+          id="close-cert-modal"
+          class="text-gray-400 hover:text-white transition-colors p-1.5 rounded-lg bg-night-700 hover:bg-night-600 focus:outline-none cursor-pointer"
+          aria-label="Close modal"
+        >
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="w-full max-h-[75vh] overflow-auto flex justify-center items-center rounded-xl bg-black/50 p-2">
+        <img
+          src={quizOffCert.image}
+          alt={quizOffCert.name}
+          class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-xl"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .education-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    position: relative;
+  }
+
+  .education-inner {
+    width: 100%;
+  }
+
+  /* Education title animation */
+  .education-title {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .education-title.visible {
+    opacity: 1;
+  }
+
+  .education-title .wave-letter {
+    transition: transform 0.1s ease-out, filter 0.1s ease-out;
+  }
+
+  /* Education cards fly in from their respective corners */
+  .edu-card {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  }
+
+  /* Left card flies in from top-left */
+  .edu-card-0 { transform: scale(0.8) translate(-60px, -60px); }
+  /* Right card flies in from top-right */
+  .edu-card-1 { transform: scale(0.8) translate(60px, -60px); }
+
+  .education-grid.cards-in .edu-card {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+
+  /* Slower exit transition so fly-out is visible */
+  .education-grid.cards-out .edu-card {
+    transition-duration: 0.4s;
+  }
+
+  .edu-card-0 { transition-delay: 0s; }
+  .edu-card-1 { transition-delay: 0.15s; }
+
+  /* Reverse stagger on exit */
+  .education-grid.cards-out .edu-card-0 { transition-delay: 0.15s; }
+  .education-grid.cards-out .edu-card-1 { transition-delay: 0s; }
+
+  /* Year chip layout */
+  .edu-card .year-counter {
+    float: right;
+    shape-outside: margin-box;
+  }
+
+  .edu-degree-title {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  [data-animations="disabled"] .education-title,
+  [data-animations="disabled"] .edu-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+</style>
+
+<script>
+  import { initEducationSection } from '../../lib/education';
+  initEducationSection();
+
+  function initCertModal() {
+    const openBtn = document.getElementById('open-cert-modal');
+    const closeBtn = document.getElementById('close-cert-modal');
+    const modal = document.getElementById('cert-image-modal');
+
+    if (!modal) return;
+
+    function openModal() {
+      modal?.classList.remove('hidden');
+      modal?.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal?.classList.add('hidden');
+      modal?.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    openBtn?.addEventListener('click', openModal);
+    closeBtn?.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+  }
+
+  initCertModal();
+  document.addEventListener('astro:after-swap', initCertModal);
+</script>

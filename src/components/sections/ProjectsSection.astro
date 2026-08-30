@@ -1,0 +1,866 @@
+---
+import { featuredProjects, otherProjects } from '../../data/projects';
+import { site } from '../../data/site';
+import SectionHeader from '../common/SectionHeader.astro';
+import ArcadeDecorations from '../common/ArcadeDecorations.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<section id="projects" class="section section-arcade" aria-labelledby="projects-heading">
+  <!-- Neon Top Border -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon-purple/50 to-transparent"></div>
+
+  <!-- Floating Arcade Decorations -->
+  <ArcadeDecorations variant="projects" />
+
+  <!-- Featured Projects — horizontal scroll -->
+  <div class="projects-hscroll-section relative z-10">
+    <div class="projects-hscroll-container">
+      <!-- Section Header pinned inside sticky -->
+      <div class="projects-hscroll-header">
+        <SectionHeader
+          title={site.sections.projects.title}
+          titleHighlight={site.sections.projects.titleHighlight}
+          subtitle={site.sections.projects.subtitle}
+          headingId="projects-heading"
+        />
+      </div>
+
+      <div class="projects-hscroll-track">
+        {
+          featuredProjects.map((project, index) => (
+            <div class="projects-hscroll-panel">
+              <div
+                class="featured-project flex flex-col lg:flex-row gap-8 items-center"
+                data-direction="left"
+              >
+            {/* Image */}
+            <div class="lg:w-1/2 project-image">
+              <div class="relative group project-image-wrapper">
+                <div class="absolute inset-0 bg-gradient-to-r from-neon-pink/20 to-neon-purple/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {project.subProjects && project.subProjects.length > 0 ? (
+                  <button
+                    type="button"
+                    data-modal-trigger={`modal-${index}`}
+                    class="relative rounded-2xl overflow-hidden border border-neon-pink/20 group-hover:border-neon-pink/40 transition-colors cursor-pointer w-full aspect-video max-h-[220px] md:max-h-[260px] block"
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      class="w-full h-full object-contain bg-night-900/60 p-1"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-night-900/90 via-night-900/20 to-transparent" />
+                  </button>
+                ) : project.live ? (
+                  <a
+                    href={project.live}
+                    class="external-link relative rounded-2xl overflow-hidden border border-neon-pink/20 group-hover:border-neon-pink/40 transition-colors cursor-pointer block w-full aspect-video max-h-[220px] md:max-h-[260px]"
+                    data-external-url={project.live}
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      class="w-full h-full object-contain bg-night-900/60 p-1"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-night-900/90 via-night-900/20 to-transparent" />
+                  </a>
+                ) : (
+                  <div class="relative rounded-2xl overflow-hidden border border-neon-pink/20 group-hover:border-neon-pink/40 transition-colors w-full aspect-video max-h-[220px] md:max-h-[260px]">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      class="w-full h-full object-contain bg-night-900/60 p-1"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-night-900/90 via-night-900/20 to-transparent" />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Content */}
+            <div class="lg:w-1/2 project-content">
+              {/* Title & Description - slides out first */}
+              <div class="project-title-desc">
+                <p class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-3">{project.title}</p>
+                <div class="glass p-4 mb-3 md:mb-4">
+                  <p class="text-gray-300 text-sm md:text-base line-clamp-3 md:line-clamp-4 leading-relaxed">{project.description}</p>
+                </div>
+              </div>
+
+              {/* Metrics - cascades from behind description */}
+              <div class="project-metrics flex flex-wrap gap-2 md:gap-3 mb-3 md:mb-4">
+                {project.metrics.map((metric) => (
+                  <span class="flex items-center gap-1.5 text-xs md:text-sm text-neon-green">
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                      />
+                    </svg>
+                    {metric}
+                  </span>
+                ))}
+              </div>
+
+              {/* Tags - cascades after metrics */}
+              <div class="project-tags flex flex-wrap gap-2 mb-3 md:mb-4">
+                {project.tags.map((tag) => (
+                  <span class="px-2.5 py-0.5 md:px-3 md:py-1 text-xs md:text-sm bg-night-700 text-gray-300 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* Links - cascades last */}
+              <div class="project-links flex gap-4">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-ghost"
+                    aria-label={`View ${project.title} on GitHub`}
+                  >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    Code
+                  </a>
+                )}
+                {project.subProjects && project.subProjects.length > 0 ? (
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-modal-trigger={`modal-${index}`}
+                    aria-label={`View ${project.title} sites`}
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                      />
+                    </svg>
+                    View Sites
+                  </button>
+                ) : project.live && (
+                  <a
+                    href={project.live}
+                    class="external-link btn btn-primary"
+                    data-external-url={project.live}
+                    aria-label={`Visit ${project.title} live site`}
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                    Live Site
+                  </a>
+                )}
+              </div>
+            </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>{/* end .projects-hscroll-track */}
+
+      {/* Panel indicator dots */}
+      <div class="projects-hscroll-indicators">
+        {featuredProjects.map((_, i) => (
+          <button class={`projects-hscroll-dot${i === 0 ? ' active' : ''}`} data-panel={i} aria-label={`Go to project ${i + 1}`}></button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto relative z-10 px-4">
+    {/* Sub-Projects Modals */}
+    {
+      featuredProjects.map((project, index) => (
+        project.subProjects && project.subProjects.length > 0 && (
+          <div
+            id={`modal-${index}`}
+            class="fixed inset-0 z-[60] hidden items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={`modal-title-${index}`}
+          >
+            {/* Backdrop */}
+            <div class="absolute inset-0 bg-night-900/90 backdrop-blur-sm" data-modal-backdrop />
+
+            {/* Modal Content */}
+            <div class="chase-border chase-always modal-container relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl border border-neon-pink/30 bg-night-800/95 p-6 md:p-8 shadow-2xl">
+              {/* Close Button */}
+              <button
+                type="button"
+                class="absolute top-4 right-4 w-10 h-10 rounded-full bg-night-700 border border-neon-pink/20 flex items-center justify-center text-gray-400 hover:text-neon-pink hover:border-neon-pink/40 transition-colors"
+                data-modal-close
+                aria-label="Close modal"
+              >
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Modal Header */}
+              <h3 id={`modal-title-${index}`} class="text-2xl font-bold text-white mb-2">
+                {project.title}
+              </h3>
+              <p class="text-gray-400 mb-8">Select a project to view</p>
+
+              {/* Sub-Projects Grid - 4 cols desktop, 2 cols tablet, 1 col mobile */}
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {project.subProjects.map((subProject, subIndex) => (
+                  subProject.subProjects && subProject.subProjects.length > 0 ? (
+                    <button
+                      type="button"
+                      data-modal-trigger={`nested-modal-${index}-${subIndex}`}
+                      class="chase-border modal-tile group block rounded-xl border border-neon-purple/20 bg-night-700/50 hover:shadow-lg hover:shadow-neon-pink/10 text-left"
+                    >
+                      {/* Sub-Project Image */}
+                      <div class="aspect-video overflow-hidden relative z-10">
+                        <img
+                          src={subProject.image}
+                          alt={subProject.title}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                      {/* Sub-Project Content */}
+                      <div class="p-4 relative z-10">
+                        <p class="font-semibold text-white group-hover:text-neon-pink transition-colors mb-1">
+                          {subProject.title}
+                        </p>
+                        <p class="text-sm text-gray-400 line-clamp-2">
+                          {subProject.description}
+                        </p>
+                        <div class="mt-3 flex items-center gap-1 text-sm text-neon-cyan">
+                          <span>View Projects</span>
+                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+                  ) : (
+                    <a
+                      href={subProject.live}
+                      class="chase-border modal-tile external-link group block rounded-xl border border-neon-purple/20 bg-night-700/50 hover:shadow-lg hover:shadow-neon-pink/10"
+                      data-external-url={subProject.live}
+                    >
+                      {/* Sub-Project Image */}
+                      <div class="aspect-video overflow-hidden relative z-10">
+                        <img
+                          src={subProject.image}
+                          alt={subProject.title}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                      {/* Sub-Project Content */}
+                      <div class="p-4 relative z-10">
+                        <p class="font-semibold text-white group-hover:text-neon-pink transition-colors mb-1">
+                          {subProject.title}
+                        </p>
+                        <p class="text-sm text-gray-400 line-clamp-2">
+                          {subProject.description}
+                        </p>
+                        <div class="mt-3 flex items-center gap-1 text-sm text-neon-cyan">
+                          <span>Visit</span>
+                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                      </div>
+                    </a>
+                  )
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+      ))
+    }
+
+    {/* Nested Sub-Projects Modals (for Parker.edu etc.) */}
+    {
+      featuredProjects.map((project, index) => (
+        project.subProjects && project.subProjects.map((subProject, subIndex) => (
+          subProject.subProjects && subProject.subProjects.length > 0 && (
+            <div
+              id={`nested-modal-${index}-${subIndex}`}
+              class="fixed inset-0 z-[70] hidden items-center justify-center p-4"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={`nested-modal-title-${index}-${subIndex}`}
+            >
+              {/* Backdrop */}
+              <div class="absolute inset-0 bg-night-900/95 backdrop-blur-sm" data-modal-backdrop />
+
+              {/* Modal Content */}
+              <div class="chase-border chase-always modal-container modal-container-cyan relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl border border-neon-cyan/30 bg-night-800/95 p-6 md:p-8 shadow-2xl">
+                {/* Back Button */}
+                <button
+                  type="button"
+                  class="absolute top-4 left-4 w-10 h-10 rounded-full bg-night-700 border border-neon-cyan/20 flex items-center justify-center text-gray-400 hover:text-neon-cyan hover:border-neon-cyan/40 transition-colors"
+                  data-back-to-modal={`modal-${index}`}
+                  aria-label="Back to previous"
+                >
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Close Button */}
+                <button
+                  type="button"
+                  class="absolute top-4 right-4 w-10 h-10 rounded-full bg-night-700 border border-neon-cyan/20 flex items-center justify-center text-gray-400 hover:text-neon-cyan hover:border-neon-cyan/40 transition-colors"
+                  data-modal-close
+                  aria-label="Close modal"
+                >
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+
+                {/* Modal Header */}
+                <h3 id={`nested-modal-title-${index}-${subIndex}`} class="text-2xl font-bold text-white mb-2 text-center">
+                  {subProject.title}
+                </h3>
+                <p class="text-gray-400 mb-8 text-center">Select a project to view</p>
+
+                {/* Nested Sub-Projects Grid */}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {subProject.subProjects.map((nestedProject) => (
+                    nestedProject.live ? (
+                      <a
+                        href={nestedProject.live}
+                        class="chase-border modal-tile modal-tile-cyan external-link group block rounded-xl border border-neon-cyan/20 bg-night-700/50 hover:shadow-lg hover:shadow-neon-cyan/10"
+                        data-external-url={nestedProject.live}
+                      >
+                        <div class="aspect-video overflow-hidden relative z-10">
+                          <img
+                            src={nestedProject.image}
+                            alt={nestedProject.title}
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div class="p-4 relative z-10">
+                          <p class="font-semibold text-white group-hover:text-neon-cyan transition-colors mb-1">
+                            {nestedProject.title}
+                          </p>
+                          <p class="text-sm text-gray-400 line-clamp-2">
+                            {nestedProject.description}
+                          </p>
+                          <div class="mt-3 flex items-center gap-1 text-sm text-neon-cyan">
+                            <span>Visit</span>
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </div>
+                        </div>
+                      </a>
+                    ) : (
+                      <div class="chase-border modal-tile modal-tile-cyan group block rounded-xl border border-neon-cyan/20 bg-night-700/50">
+                        <div class="aspect-video overflow-hidden relative z-10">
+                          <img
+                            src={nestedProject.image}
+                            alt={nestedProject.title}
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div class="p-4 relative z-10">
+                          <p class="font-semibold text-white mb-1">
+                            {nestedProject.title}
+                          </p>
+                          <p class="text-sm text-gray-400 line-clamp-2">
+                            {nestedProject.description}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  ))}
+                </div>
+              </div>
+            </div>
+          )
+        ))
+      ))
+    }
+
+    {/* External Link Confirmation Modal */}
+    <div
+      id="external-link-modal"
+      class="fixed inset-0 z-[80] hidden items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="external-modal-title"
+    >
+      {/* Backdrop */}
+      <div class="absolute inset-0 bg-night-900/95 backdrop-blur-sm" data-external-modal-backdrop />
+
+      {/* Modal Content */}
+      <div class="chase-border chase-always modal-container modal-container-warning relative w-full max-w-md rounded-2xl border border-neon-yellow/30 bg-night-800/95 p-6 md:p-8 shadow-2xl text-center">
+        {/* Warning Icon */}
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-neon-yellow/10 border border-neon-yellow/30 flex items-center justify-center">
+          <svg class="w-8 h-8 text-neon-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+
+        <h3 id="external-modal-title" class="text-xl font-bold text-white mb-2">
+          Leaving Portfolio
+        </h3>
+        <p class="text-gray-400 mb-6">
+          You're about to visit an external website. This will open in a new tab.
+        </p>
+        <p id="external-link-url" class="text-sm text-neon-cyan font-mono mb-6 break-all"></p>
+
+        {/* Buttons */}
+        <div class="flex gap-4 justify-center">
+          <button
+            type="button"
+            class="btn btn-ghost"
+            data-external-modal-cancel
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-external-modal-confirm
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- More Work — own section, 100vh, snaps -->
+<section id="more-work" class="more-work-section section section-arcade" aria-labelledby="more-work-heading">
+  <div class="more-work-inner max-w-6xl mx-auto relative z-10 px-4">
+    <div class="other-projects-section">
+      <h3 id="more-work-heading" class="other-projects-title subsection-title text-2xl font-bold text-white text-center mb-8">
+        {site.sections.projects.otherTitle} <span class="gradient-text">{site.sections.projects.otherTitleHighlight}</span>
+      </h3>
+
+      <div class="other-projects-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          otherProjects.map((project, index) => (
+            <div class={`card card-highlighted group other-project-card other-project-card-${index}`}>
+              {/* Header */}
+              <div class="flex items-start justify-between mb-4">
+                <div class="project-icon w-12 h-12 rounded-xl bg-neon-pink/10 border border-neon-pink/20 flex items-center justify-center">
+                  <svg
+                    class="w-6 h-6 text-neon-pink"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                    />
+                  </svg>
+                </div>
+                <div class="flex gap-3">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      class="external-link text-gray-400 hover:text-neon-pink transition-colors"
+                      data-external-url={project.github}
+                      aria-label={`View ${project.title} on GitHub`}
+                    >
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                      </svg>
+                    </a>
+                  )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      class="external-link text-gray-400 hover:text-neon-yellow transition-colors"
+                      data-external-url={project.live}
+                      aria-label={`Visit ${project.title}`}
+                    >
+                      <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Content */}
+              <p class="text-lg font-semibold text-white mb-2 group-hover:text-neon-pink transition-colors">
+                {project.title}
+              </p>
+              <p class="text-gray-400 text-sm mb-4">{project.description}</p>
+
+              {/* Tags */}
+              <div class="flex flex-wrap gap-2 mt-auto">
+                {project.tags.slice(0, 3).map((tag) => (
+                  <span class="text-xs text-gray-500">{tag}</span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initProjectsSection } from '../../lib/projects-scroll';
+  initProjectsSection();
+</script>
+
+<style>
+  /* ============================================
+     Projects Horizontal Scroll
+     ============================================ */
+  :global(#projects) {
+    scroll-snap-align: start;
+    min-height: auto;
+  }
+
+  .projects-hscroll-section {
+    position: relative;
+  }
+
+  .projects-hscroll-container {
+    position: sticky;
+    top: var(--nav-h, 60px);
+    height: calc(100vh - var(--nav-h, 60px));
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .projects-hscroll-header {
+    flex-shrink: 0;
+    padding: 2rem 5% 0;
+  }
+
+  /* Reduce top padding on 1440x900 screens */
+  @media (width: 1440px) and (height: 900px) {
+    .projects-hscroll-header {
+      padding-top: calc(2rem - 30px);
+    }
+  }
+
+  .projects-hscroll-track {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    will-change: transform;
+    flex: 1;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Each panel takes full container width so adjacent panels are off-screen */
+  .projects-hscroll-panel {
+    flex: 0 0 100%;
+    width: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    padding: 0 5%;
+  }
+
+  /* Featured project content inside each panel capped at 1000px */
+  .projects-hscroll-panel > .featured-project {
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .projects-hscroll-indicators {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem 0 0.75rem;
+    z-index: 20;
+  }
+
+  .projects-hscroll-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(128, 0, 255, 0.4);
+    background: transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .projects-hscroll-dot.active {
+    background: var(--color-neon-purple);
+    border-color: var(--color-neon-purple);
+    box-shadow: 0 0 10px rgba(128, 0, 255, 0.6);
+  }
+
+  /* Mobile: tighter padding for scroll panels */
+  @media (max-width: 767px) {
+    .projects-hscroll-header {
+      padding: 0.5rem 1rem 0;
+    }
+
+    .projects-hscroll-panel {
+      padding: 0 0.75rem;
+    }
+
+    .projects-hscroll-panel .featured-project {
+      padding: 1rem;
+    }
+
+    /* Reduce project title and description sizes */
+    .projects-hscroll-panel .project-title-desc p.text-2xl {
+      font-size: 1.125rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    .projects-hscroll-panel .project-title-desc .glass {
+      padding: 0.75rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    .projects-hscroll-panel .project-title-desc .glass p {
+      font-size: 0.875rem !important;
+    }
+
+    .projects-hscroll-panel .project-metrics {
+      font-size: 0.8rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    .projects-hscroll-panel .project-tags span {
+      font-size: 0.7rem !important;
+      padding: 0.25rem 0.5rem !important;
+    }
+
+    .projects-hscroll-indicators {
+      padding: 0.75rem 0;
+    }
+  }
+
+  /* Featured project animations */
+  .featured-project {
+    position: relative;
+  }
+
+  .featured-project .project-image {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Title/desc and cascading elements all slide down */
+  .featured-project .project-title-desc,
+  .featured-project .project-metrics,
+  .featured-project .project-tags,
+  .featured-project .project-links {
+    opacity: 0;
+    transition: opacity 0.4s ease-out, transform 0.5s ease-out;
+    transform: translateY(-20px);
+  }
+
+  /* Image slides in from left */
+  .featured-project .project-image {
+    transform: translateX(-100px);
+  }
+
+  /* Image slides in */
+  .featured-project.image-in .project-image {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Cascade animations */
+  .featured-project.content-in .project-title-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .featured-project.metrics-in .project-metrics {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .featured-project.tags-in .project-tags {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .featured-project.links-in .project-links {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Disable animations when preference set */
+  [data-animations="disabled"] .featured-project .project-image,
+  [data-animations="disabled"] .featured-project .project-title-desc,
+  [data-animations="disabled"] .featured-project .project-metrics,
+  [data-animations="disabled"] .featured-project .project-tags,
+  [data-animations="disabled"] .featured-project .project-links {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Very small screens (374px and below): disable horizontal scroll, show inline */
+  @media (max-width: 374px) {
+    .projects-hscroll-section {
+      height: auto !important;
+    }
+
+    .projects-hscroll-container {
+      position: relative;
+      top: 0;
+      height: auto;
+      overflow: visible;
+    }
+
+    .projects-hscroll-track {
+      flex-direction: column;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .projects-hscroll-panel {
+      flex: none;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured-project,
+    .featured-project .project-image,
+    .featured-project .project-title-desc,
+    .featured-project .project-metrics,
+    .featured-project .project-tags,
+    .featured-project .project-links {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .projects-hscroll-indicators {
+      display: none;
+    }
+  }
+
+  /* ============================================
+     More Work — own snapping section, 100vh
+     ============================================ */
+  .more-work-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    position: relative;
+  }
+
+  .more-work-inner {
+    width: 100%;
+  }
+
+  /* Other Projects (More Work) animations */
+  .other-projects-title {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .other-projects-title.visible {
+    opacity: 1;
+  }
+
+  /* Wave letter transitions */
+  .other-projects-title .wave-letter {
+    transition: transform 0.1s ease-out, filter 0.1s ease-out;
+  }
+
+  .other-project-card {
+    opacity: 0;
+    transform: scale(0.8) translateY(-30px);
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  }
+
+  .other-project-card.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .other-project-card-0 { transition-delay: 0s; }
+  .other-project-card-1 { transition-delay: 0.1s; }
+  .other-project-card-2 { transition-delay: 0.2s; }
+  .other-project-card-3 { transition-delay: 0.3s; }
+
+  /* Slower exit transition so fly-out is visible */
+  .other-projects-grid.cards-out .other-project-card {
+    transition-duration: 0.4s;
+  }
+
+  /* Reverse stagger on exit — last card leaves first */
+  .other-projects-grid.cards-out .other-project-card-0 { transition-delay: 0.3s; }
+  .other-projects-grid.cards-out .other-project-card-1 { transition-delay: 0.2s; }
+  .other-projects-grid.cards-out .other-project-card-2 { transition-delay: 0.1s; }
+  .other-projects-grid.cards-out .other-project-card-3 { transition-delay: 0s; }
+
+  /* Disable animations when preference set */
+  [data-animations="disabled"] .other-projects-title,
+  [data-animations="disabled"] .other-project-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+</style>

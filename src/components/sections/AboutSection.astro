@@ -1,0 +1,480 @@
+---
+import { services } from '../../data/skills';
+import { site } from '../../data/site';
+import SectionHeader from '../common/SectionHeader.astro';
+import ArcadeDecorations from '../common/ArcadeDecorations.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<section id="about" class="section section-arcade" aria-labelledby="about-heading">
+  <!-- Neon Top Border -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon-cyan/50 to-transparent"></div>
+
+  <!-- Floating Arcade Decorations -->
+  <ArcadeDecorations variant="about" />
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    {/* Skills Section - COMMENTED OUT
+    <div class="mb-20">
+      <h3 class="text-2xl font-bold text-white text-center mb-8">
+        {site.sections.about.skillsTitle} <span class="gradient-text">{site.sections.about.skillsTitleHighlight}</span>
+      </h3>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {
+          skills.map((category) => (
+            <div class="card">
+              <p class="text-lg font-semibold text-white mb-4">
+                {category.name}
+              </p>
+              <div class="space-y-3">
+                {category.skills.slice(0, 5).map((skill) => (
+                  <div>
+                    <div class="flex justify-between text-sm mb-1">
+                      <span class="text-gray-300">{skill.name}</span>
+                      <span class="text-neon-pink">{skill.level}%</span>
+                    </div>
+                    <div class="h-2 bg-night-700/50 rounded-full overflow-hidden border border-neon-pink/20">
+                      <div
+                        class="h-full bg-gradient-to-r from-neon-pink via-neon-purple to-neon-orange rounded-full transition-all duration-1000"
+                        style={`width: ${skill.level}%; box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);`}
+                        role="progressbar"
+                        aria-valuenow={skill.level}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-label={`${skill.name}: ${skill.level}%`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    */}
+  </div>
+
+  <!-- Services Section — full width, outside max-w-6xl -->
+  <div class="services-section relative z-10">
+    <div class="services-container services-hscroll">
+      <!-- Section Header pinned inside the sticky container -->
+      <div class="services-header">
+        <SectionHeader
+          title={site.sections.about.title}
+          titleHighlight={site.sections.about.titleHighlight}
+          subtitle={site.sections.about.subtitle}
+          headingId="about-heading"
+        />
+      </div>
+
+      <div class="services-hscroll-track">
+        {/* Web & Software Development */}
+        <div class="service-panel">
+        <div class="card card-highlighted group service-card service-first">
+          <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
+            <svg class="w-6 h-6 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+          <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[0].title}>{services[0].title}</p>
+          <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[0].description}></p>
+          <ul class="service-features space-y-2">
+            {services[0].features.map((feature, index) => (
+              <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
+                <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                <span class="feature-text">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
+
+        {/* AgroGuard Smart Agriculture System */}
+        {services[3] && (
+          <div class="service-panel">
+          <div class="card card-highlighted group relative overflow-hidden service-card service-mid-0">
+            <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-green/20 to-neon-cyan/20 flex items-center justify-center mb-4 group-hover:from-neon-green/30 group-hover:to-neon-cyan/30 transition-colors border border-neon-green/20">
+              <svg
+                class="w-6 h-6 text-neon-green"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                />
+              </svg>
+            </div>
+            <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[3].title}>{services[3].title}</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              {/* Left Column: Description, Features, Tech Stack */}
+              <div class="lg:col-span-7 space-y-4">
+                <p class="service-desc text-gray-300 text-[16px] leading-relaxed" set:html={services[3].description}></p>
+
+                {/* Key Features */}
+                {services[3].features && (
+                  <div>
+                    <p class="text-neon-cyan font-mono text-xs font-semibold mb-2 uppercase tracking-wider">Key Features</p>
+                    <ul class="service-features grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {services[3].features.map((feature, index) => (
+                        <li class="feature-item flex items-center gap-2 text-[14px] text-gray-300" style={`--feature-index: ${index}`}>
+                          <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                          <span class="feature-text">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Tech Stack */}
+                {services[3].techStack && (
+                  <div>
+                    <p class="text-neon-pink font-mono text-xs font-semibold mb-2 uppercase tracking-wider">Tech Stack</p>
+                    <div class="flex flex-wrap gap-2">
+                      {services[3].techStack.map((tech) => (
+                        <span class="px-2.5 py-1 text-xs bg-night-700/80 text-neon-cyan border border-neon-cyan/20 rounded-full font-mono">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: AgroGuard Hardware Image */}
+              <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                <button
+                  type="button"
+                  class="logo-item logo-thumbnail w-full group/img relative rounded-xl overflow-hidden border border-neon-cyan/30 hover:border-neon-cyan/60 transition-all cursor-pointer shadow-lg hover:shadow-neon-cyan/20"
+                  data-src="/img/portfolio/agroguard-hardware.jpg"
+                  data-alt="AgroGuard Smart Agriculture System Hardware Prototype"
+                >
+                  <img
+                    src="/img/portfolio/agroguard-hardware.jpg"
+                    alt="AgroGuard Smart Agriculture System Hardware Prototype"
+                    class="w-full h-48 lg:h-64 object-contain bg-night-900/60 p-1 group-hover/img:scale-105 transition-transform duration-300"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-night-900/90 via-night-900/20 to-transparent flex items-end justify-center p-3">
+                    <span class="text-xs text-neon-cyan font-mono flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                      </svg>
+                      Click to view full prototype
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Image Modal - inside card -->
+            <div id="logo-modal" class="absolute inset-0 z-20 hidden items-center justify-center bg-black/90 backdrop-blur-sm rounded-2xl p-4">
+              <button id="modal-close" class="absolute top-2 right-2 z-30 text-white text-[3rem] leading-none hover:text-neon-pink transition-colors w-12 h-12 flex items-center justify-center pb-1">&times;</button>
+              <img id="modal-image" src="" alt="" class="max-h-[85vh] max-w-[90%] object-contain rounded-lg border border-neon-cyan/30 shadow-2xl" />
+            </div>
+          </div>
+          </div>
+        )}
+
+        {/* CRM & Integration */}
+        <div class="service-panel">
+        <div class="card card-highlighted group service-card service-mid-1">
+          <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
+            <svg
+              class="w-6 h-6 text-neon-orange"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
+              />
+            </svg>
+          </div>
+          <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[2].title}>{services[2].title}</p>
+          <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[2].description}></p>
+          <ul class="service-features space-y-2">
+            {services[2].features.map((feature, index) => (
+              <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
+                <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                <span class="feature-text">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
+
+        {/* Cloud Solutions */}
+        <div class="service-panel">
+        <div class="card card-highlighted group service-card service-last">
+          <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
+            <svg
+              class="w-6 h-6 text-neon-yellow"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+              />
+            </svg>
+          </div>
+          <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[1].title}>{services[1].title}</p>
+          <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[1].description}></p>
+          <ul class="service-features space-y-2">
+            {services[1].features.map((feature, index) => (
+              <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
+                <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                <span class="feature-text">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
+        </div>{/* end .services-hscroll-track */}
+
+        {/* Panel indicator dots */}
+        <div class="hscroll-indicators">
+          {services.map((_, i) => (
+            <button class={`hscroll-dot${i === 0 ? ' active' : ''}`} data-panel={i} aria-label={`Go to service ${i + 1}`}></button>
+          ))}
+        </div>
+      </div>
+    </div>
+</section>
+
+<script>
+  import { initAboutSection } from '../../lib/about-scroll';
+  initAboutSection();
+</script>
+
+<style>
+  :global(#about) {
+    scroll-snap-align: start;
+    min-height: auto;
+  }
+
+  .services-section {
+    position: relative;
+  }
+
+  .services-container.services-hscroll {
+    position: sticky;
+    top: var(--nav-h, 60px);
+    height: calc(100vh - var(--nav-h, 60px));
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .services-header {
+    flex-shrink: 0;
+    padding: 2rem 5% 0;
+  }
+
+  .services-hscroll-track {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    will-change: transform;
+    flex: 1;
+    align-items: center;
+    width: 100%;
+  }
+
+  .services-hscroll-track .service-panel {
+    flex: 0 0 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 5%;
+  }
+
+  .services-hscroll-track .service-panel > .card {
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  /* Service card entrance animation — swipes in from right */
+  .service-card {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .service-card.card-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Service card content animations */
+  .service-icon-anim {
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .service-icon-anim.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .service-desc {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .service-desc.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .feature-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .logo-item {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  }
+
+  .logo-item.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  /* Panel indicator dots */
+  .hscroll-indicators {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem 0;
+    z-index: 20;
+  }
+
+  .hscroll-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 0, 255, 0.4);
+    background: transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .hscroll-dot.active {
+    background: var(--color-neon-pink);
+    border-color: var(--color-neon-pink);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+  }
+
+  /* Mobile: tighter padding for scroll panels */
+  @media (max-width: 767px) {
+    .services-header {
+      padding: 0.5rem 1rem 0;
+    }
+
+    .services-hscroll-track .service-panel {
+      padding: 0 0.75rem;
+    }
+
+    .services-hscroll-track .service-panel > .card {
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .services-hscroll-track .service-card-title {
+      font-size: 1.125rem !important;
+    }
+
+    .services-hscroll-track .service-desc {
+      font-size: 0.9rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    .services-hscroll-track .feature-item {
+      font-size: 0.9rem !important;
+    }
+
+    .hscroll-indicators {
+      padding: 0.75rem 0;
+    }
+  }
+
+  /* Disable animations when preference set */
+  [data-animations="disabled"] .service-card,
+  [data-animations="disabled"] .service-icon-anim,
+  [data-animations="disabled"] .service-desc,
+  [data-animations="disabled"] .feature-item,
+  [data-animations="disabled"] .logo-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Very small screens (374px and below): disable horizontal scroll, show inline */
+  @media (max-width: 374px) {
+    .services-section {
+      height: auto !important;
+    }
+
+    .services-container.services-hscroll {
+      position: relative;
+      top: 0;
+      height: auto;
+      overflow: visible;
+    }
+
+    .services-hscroll-track {
+      flex-direction: column;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .services-hscroll-track .service-panel {
+      flex: none;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .service-card {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .service-icon-anim,
+    .service-desc,
+    .feature-item,
+    .logo-item {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .hscroll-indicators {
+      display: none;
+    }
+  }
+</style>

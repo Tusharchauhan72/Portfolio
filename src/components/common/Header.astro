@@ -1,0 +1,486 @@
+---
+import { navItems } from '../../data/navigation';
+import { profile } from '../../data/profile';
+import { getMailtoLink } from '../../lib/contact';
+import ThemeToggle from './ThemeToggle.astro';
+import SocialLink from '../ui/SocialLink.astro';
+
+const mailtoLink = getMailtoLink(profile);
+---
+
+<header class="fixed top-0 left-0 right-0 z-50">
+  <nav id="main-nav" class="glass w-full px-4 md:px-8 py-2 flex flex-wrap items-center justify-between transition-all duration-300 relative overflow-hidden rounded-none border-t-0 border-l-0 border-r-0">
+    <!-- Heat sensor glow effect - pink to purple left to right -->
+    <div id="nav-heat-glow" class="pointer-events-none absolute w-96 h-40 rounded-full opacity-0 transition-opacity duration-200" style="background: linear-gradient(to right, rgba(34, 203, 204, 0.15), rgba(102, 0, 255, 0.15)); transform: translate(-50%, -50%); filter: blur(30px);"></div>
+
+    <!-- Left Side: Navigation Links -->
+    <div class="flex items-center gap-1">
+      <!-- Desktop/Tablet Navigation (visible above 680px) -->
+      <ul id="nav-links-inline" class="nav-links-inline hidden items-center gap-1">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="px-4 py-2 rounded-lg text-gray-300 hover:text-neon-pink transition-all duration-200"
+                aria-label={item.label}
+                title={item.label === 'Home' ? 'Dawn of the Devs Webring Homepage' : item.label}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Mobile Social Icons (visible at 680px and below) -->
+      <div id="social-icons-inline" class="social-icons-inline hidden items-center gap-2">
+        <SocialLink platform="github" href={profile.social.github} />
+        <SocialLink platform="linkedin" href={profile.social.linkedin} />
+        <SocialLink platform="email" href={mailtoLink} />
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="flex items-center gap-3">
+      <!-- Desktop Social Icons (visible above 960px) -->
+      <div id="social-icons-desktop" class="social-icons-desktop hidden items-center gap-2">
+        <SocialLink platform="github" href={profile.social.github} />
+        <SocialLink platform="linkedin" href={profile.social.linkedin} />
+        <SocialLink platform="email" href={mailtoLink} />
+      </div>
+
+      <!-- Theme Toggle (visible above 960px and below 681px) -->
+      <div class="theme-toggle-inline">
+        <ThemeToggle />
+      </div>
+
+      <!-- Info Button (visible 960px - 681px) - shows social icons -->
+      <button
+        id="info-menu-toggle"
+        class="info-menu-toggle hidden w-10 h-10 rounded-lg border border-gray-300 flex items-center justify-center text-gray-300 hover:text-neon-pink hover:border-neon-pink hover:bg-neon-pink/10 transition-all duration-200"
+        aria-label="Toggle social links menu"
+        aria-expanded="false"
+      >
+        <!-- Info "i" icon -->
+        <span id="info-icon" class="font-serif font-bold text-xl">i</span>
+        <!-- Close icon (hidden by default) -->
+        <svg id="info-close-icon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Hamburger Menu Toggle (visible at 680px and below) -->
+      <button
+        id="mobile-menu-toggle"
+        class="mobile-menu-toggle hidden w-10 h-10 rounded-lg flex items-center justify-center text-gray-300 hover:text-neon-pink hover:bg-neon-pink/10 transition-all duration-200"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
+      >
+        <!-- Hamburger icon -->
+        <svg id="hamburger-icon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <!-- Close icon (hidden by default) -->
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Info Menu Dropdown (social icons + theme toggle) - visible 960px - 681px -->
+    <div
+      id="info-menu"
+      class="info-menu w-full overflow-hidden transition-all duration-300 ease-in-out"
+      style="max-height: 0;"
+      aria-hidden="true"
+    >
+      <div class="flex items-center justify-center gap-4 py-4">
+        <SocialLink platform="github" href={profile.social.github} size="lg" />
+        <SocialLink platform="linkedin" href={profile.social.linkedin} size="lg" />
+        <SocialLink platform="email" href={mailtoLink} size="lg" />
+        <div class="border-l border-gray-600 h-8 mx-2"></div>
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <!-- Mobile Menu (nav links) - visible at 680px and below -->
+    <div
+      id="mobile-menu"
+      class="mobile-menu w-full overflow-hidden transition-all duration-300 ease-in-out"
+      style="max-height: 0;"
+      aria-hidden="true"
+    >
+      <ul class="py-2 space-y-1">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="block px-4 py-3 rounded-lg text-gray-300 hover:text-neon-pink transition-colors duration-200"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <!-- Theme Toggle (visible in menu at 374px and below) -->
+      <div class="mobile-menu-theme-toggle px-4 py-3 border-t border-gray-700/50 hidden">
+        <ThemeToggle />
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* Default: hide everything, JS will manage visibility based on breakpoints */
+
+  /* Desktop: >960px - nav links and social icons visible */
+  @media (min-width: 961px) {
+    .nav-links-inline {
+      display: flex !important;
+    }
+    .social-icons-desktop {
+      display: flex !important;
+    }
+    .theme-toggle-inline {
+      display: block !important;
+    }
+    .info-menu-toggle {
+      display: none !important;
+    }
+    .mobile-menu-toggle {
+      display: none !important;
+    }
+    .social-icons-inline {
+      display: none !important;
+    }
+  }
+
+  /* Medium: 960px - 681px - nav links visible, info button for social icons + theme toggle */
+  @media (min-width: 681px) and (max-width: 960px) {
+    .nav-links-inline {
+      display: flex !important;
+    }
+    .social-icons-desktop {
+      display: none !important;
+    }
+    .theme-toggle-inline {
+      display: none !important;
+    }
+    .info-menu-toggle {
+      display: flex !important;
+    }
+    .mobile-menu-toggle {
+      display: none !important;
+    }
+    .social-icons-inline {
+      display: none !important;
+    }
+  }
+
+  /* Mobile: 680px - 425px - social icons + theme toggle visible, hamburger for nav links */
+  @media (min-width: 425px) and (max-width: 680px) {
+    .nav-links-inline {
+      display: none !important;
+    }
+    .social-icons-desktop {
+      display: none !important;
+    }
+    .theme-toggle-inline {
+      display: block !important;
+    }
+    .info-menu-toggle {
+      display: none !important;
+    }
+    .mobile-menu-toggle {
+      display: flex !important;
+    }
+    .social-icons-inline {
+      display: flex !important;
+    }
+    .info-menu {
+      display: none !important;
+    }
+  }
+
+  /* Small Mobile: <=424px - social icons visible, theme toggle in hamburger menu */
+  @media (max-width: 424px) {
+    .nav-links-inline {
+      display: none !important;
+    }
+    .social-icons-desktop {
+      display: none !important;
+    }
+    .theme-toggle-inline {
+      display: none !important;
+    }
+    .info-menu-toggle {
+      display: none !important;
+    }
+    .mobile-menu-toggle {
+      display: flex !important;
+    }
+    .social-icons-inline {
+      display: flex !important;
+    }
+    .info-menu {
+      display: none !important;
+    }
+    .mobile-menu-theme-toggle {
+      display: block !important;
+    }
+  }
+
+  #main-nav {
+    border-radius: 0 !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+</style>
+
+<script>
+  // Arcade carpet gradient background - shared between functions
+  const arcadeGradient = `
+    linear-gradient(135deg, rgba(34, 203, 204, 0.1) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(102, 0, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(45deg, rgba(255, 255, 0, 0.05) 0%, transparent 50%),
+    linear-gradient(315deg, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+    rgba(10, 0, 21, 0.9)
+  `;
+
+  function initInfoMenu() {
+    const toggle = document.getElementById('info-menu-toggle');
+    const menu = document.getElementById('info-menu');
+    const nav = document.getElementById('main-nav');
+    const infoIcon = document.getElementById('info-icon');
+    const closeIcon = document.getElementById('info-close-icon');
+
+    if (!toggle || !menu || !nav || !infoIcon || !closeIcon) return;
+
+    function applyDarkBg() {
+      nav.style.background = arcadeGradient;
+      nav.style.backgroundColor = 'rgba(10, 0, 21, 0.9)';
+      nav.style.borderColor = 'rgba(34, 203, 204, 0.3)';
+    }
+
+    function removeDarkBg() {
+      if (window.scrollY === 0) {
+        nav.style.background = '';
+        nav.style.backgroundColor = '';
+        nav.style.borderColor = '';
+      }
+    }
+
+    toggle.addEventListener('click', () => {
+      const isOpen = menu.style.maxHeight !== '0px' && menu.style.maxHeight !== '';
+
+      if (isOpen) {
+        menu.style.maxHeight = '0';
+        menu.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        infoIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        removeDarkBg();
+      } else {
+        menu.style.maxHeight = menu.scrollHeight + 'px';
+        menu.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        infoIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        applyDarkBg();
+      }
+    });
+
+    // Close menu when clicking a link
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.style.maxHeight = '0';
+        menu.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        infoIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        removeDarkBg();
+      });
+    });
+  }
+
+  function initMobileMenu() {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const nav = document.getElementById('main-nav');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (!toggle || !menu || !nav || !hamburgerIcon || !closeIcon) return;
+
+    function applyDarkBg() {
+      nav.style.background = arcadeGradient;
+      nav.style.backgroundColor = 'rgba(10, 0, 21, 0.9)';
+      nav.style.borderColor = 'rgba(34, 203, 204, 0.3)';
+    }
+
+    function removeDarkBg() {
+      if (window.scrollY === 0) {
+        nav.style.background = '';
+        nav.style.backgroundColor = '';
+        nav.style.borderColor = '';
+      }
+    }
+
+    toggle.addEventListener('click', () => {
+      const isOpen = menu.style.maxHeight !== '0px' && menu.style.maxHeight !== '';
+
+      if (isOpen) {
+        menu.style.maxHeight = '0';
+        menu.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        nav.classList.remove('menu-expanded');
+        removeDarkBg();
+      } else {
+        menu.style.maxHeight = menu.scrollHeight + 'px';
+        menu.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        hamburgerIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        nav.classList.add('menu-expanded');
+        applyDarkBg();
+      }
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.style.maxHeight = '0';
+        menu.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        nav.classList.remove('menu-expanded');
+        removeDarkBg();
+      });
+    });
+  }
+
+  function initNavScroll() {
+    const nav = document.getElementById('main-nav');
+    if (!nav) return;
+
+    const scrollThreshold = 300;
+
+    function updateNav() {
+      const scrollY = window.scrollY;
+      const progress = Math.min(scrollY / scrollThreshold, 1);
+
+      if (progress > 0) {
+        const bgOpacity = 0.05 + (progress * 0.85);
+        nav.style.background = arcadeGradient;
+        nav.style.backgroundColor = `rgba(10, 0, 21, ${bgOpacity})`;
+        nav.style.borderColor = `rgba(34, 203, 204, ${0.1 + progress * 0.2})`;
+      } else {
+        nav.style.background = '';
+        nav.style.backgroundColor = '';
+        nav.style.borderColor = '';
+      }
+    }
+
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  }
+
+  function initNavHeatGlow() {
+    const nav = document.getElementById('main-nav');
+    const glow = document.getElementById('nav-heat-glow');
+    if (!nav || !glow) return;
+
+    nav.addEventListener('mousemove', (e) => {
+      const rect = nav.getBoundingClientRect();
+      glow.style.left = `${e.clientX - rect.left}px`;
+      glow.style.top = `${e.clientY - rect.top}px`;
+      glow.style.opacity = '1';
+    });
+
+    nav.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+  }
+
+  function initMenuResizeHandler() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const infoMenu = document.getElementById('info-menu');
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const infoToggle = document.getElementById('info-menu-toggle');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const mobileCloseIcon = document.getElementById('close-icon');
+    const infoIcon = document.getElementById('info-icon');
+    const infoCloseIcon = document.getElementById('info-close-icon');
+    const nav = document.getElementById('main-nav');
+
+    if (!mobileMenu || !infoMenu || !nav) return;
+
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+
+    function closeAllMenus() {
+      // Close mobile menu
+      if (mobileMenu.style.maxHeight !== '0px' && mobileMenu.style.maxHeight !== '') {
+        mobileMenu.style.maxHeight = '0';
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        mobileToggle?.setAttribute('aria-expanded', 'false');
+        hamburgerIcon?.classList.remove('hidden');
+        mobileCloseIcon?.classList.add('hidden');
+        nav.classList.remove('menu-expanded');
+      }
+
+      // Close info menu
+      if (infoMenu.style.maxHeight !== '0px' && infoMenu.style.maxHeight !== '') {
+        infoMenu.style.maxHeight = '0';
+        infoMenu.setAttribute('aria-hidden', 'true');
+        infoToggle?.setAttribute('aria-expanded', 'false');
+        infoIcon?.classList.remove('hidden');
+        infoCloseIcon?.classList.add('hidden');
+      }
+
+      // Reset nav background if at top
+      if (window.scrollY === 0) {
+        nav.style.background = '';
+        nav.style.backgroundColor = '';
+        nav.style.borderColor = '';
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const width = window.innerWidth;
+
+        // Close mobile menu when viewport goes above 680px
+        if (width > 680) {
+          if (mobileMenu.style.maxHeight !== '0px' && mobileMenu.style.maxHeight !== '') {
+            closeAllMenus();
+          }
+        }
+
+        // Close info menu when viewport goes outside 681px-960px range
+        if (width <= 680 || width > 960) {
+          if (infoMenu.style.maxHeight !== '0px' && infoMenu.style.maxHeight !== '') {
+            closeAllMenus();
+          }
+        }
+      }, 100);
+    });
+  }
+
+  function initHeader() {
+    initInfoMenu();
+    initMobileMenu();
+    initNavScroll();
+    initNavHeatGlow();
+    initMenuResizeHandler();
+  }
+
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
+</script>

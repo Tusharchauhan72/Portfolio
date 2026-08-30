@@ -1,0 +1,462 @@
+---
+/**
+ * Theme toggle dropdown for selecting between normal, high contrast dark, and high contrast light modes
+ */
+import ToggleSwitch from '../ui/ToggleSwitch.astro';
+---
+
+<div class="theme-toggle-container relative">
+  <button
+    class="theme-toggle h-10 flex items-center gap-2 px-3 text-sm rounded-lg text-gray-300 hover:border-neon-cyan hover:text-neon-cyan transition-colors"
+    style="border: 1px solid #ffffff1a;"
+    aria-label="Select contrast mode"
+    aria-expanded="false"
+    aria-haspopup="true"
+  >
+    <!-- Normal theme icon (monitor) -->
+    <svg class="w-5 h-5 theme-icon-normal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+    <!-- High contrast dark icon (moon) -->
+    <svg class="w-5 h-5 theme-icon-contrast-dark hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+    <!-- High contrast light icon (sun) -->
+    <svg class="w-5 h-5 theme-icon-contrast-light hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+    <span class="theme-label">Contrast</span>
+    <!-- Dropdown arrow -->
+    <svg class="w-4 h-4 ml-1 dropdown-arrow transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Dropdown Menu (fixed position to escape overflow-hidden containers) -->
+  <div class="theme-dropdown fixed py-2 min-w-[160px] rounded-lg border border-gray-600 bg-night-900/95 backdrop-blur-sm shadow-lg opacity-0 invisible transition-all duration-200 z-[9999]" style="top: 0; left: 0;">
+    <!-- Normal option -->
+    <button
+      class="theme-option w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors outline-none border-none focus:outline-none"
+      data-theme-value="normal"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+      <span>Normal</span>
+      <svg class="w-4 h-4 ml-auto check-icon hidden text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </button>
+
+    <!-- High Contrast Dark option -->
+    <button
+      class="theme-option w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors outline-none border-none focus:outline-none"
+      data-theme-value="high-contrast"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+      </svg>
+      <span>Dark</span>
+      <svg class="w-4 h-4 ml-auto check-icon hidden text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </button>
+
+    <!-- High Contrast Light option -->
+    <button
+      class="theme-option w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors outline-none border-none focus:outline-none"
+      data-theme-value="high-contrast-light"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      <span>Light</span>
+      <svg class="w-4 h-4 ml-auto check-icon hidden text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </button>
+
+    <!-- Separator -->
+    <div class="my-2 border-t border-gray-600"></div>
+
+    <!-- Animations toggle -->
+    <button
+      class="animations-toggle w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors outline-none border-none focus:outline-none"
+    >
+      <!-- Motion icon -->
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      <span>Animations</span>
+      <!-- Toggle switch -->
+      <ToggleSwitch checked={true} class="ml-auto animations-switch" />
+    </button>
+
+    <!-- Sounds toggle -->
+    <button
+      class="sounds-toggle w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors outline-none border-none focus:outline-none"
+    >
+      <!-- Speaker icon -->
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z" />
+      </svg>
+      <span>Sounds</span>
+      <!-- Toggle switch -->
+      <ToggleSwitch checked={true} class="ml-auto sounds-switch" />
+    </button>
+  </div>
+</div>
+
+<style is:global>
+  .theme-toggle[aria-expanded="true"] {
+    border-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+</style>
+
+<script>
+  import { setTheme, getTheme, getAnimationsEnabled, setAnimationsEnabled, getSoundsEnabled, setSoundsEnabled } from '../../lib/theme';
+
+  function initThemeToggles() {
+    const containers = document.querySelectorAll('.theme-toggle-container');
+    if (containers.length === 0) return;
+
+    function updateAnimationsToggle() {
+      const enabled = getAnimationsEnabled();
+      document.querySelectorAll('.animations-toggle').forEach((toggle) => {
+        const switchEl = toggle.querySelector('.toggle-switch') as HTMLElement;
+        if (switchEl) {
+          switchEl.dataset.checked = enabled ? 'true' : 'false';
+          if (enabled) {
+            switchEl.classList.add('checked');
+          } else {
+            switchEl.classList.remove('checked');
+          }
+        }
+      });
+    }
+
+    function updateSoundsToggle() {
+      const enabled = getSoundsEnabled();
+      document.querySelectorAll('.sounds-toggle').forEach((toggle) => {
+        const switchEl = toggle.querySelector('.toggle-switch') as HTMLElement;
+        if (switchEl) {
+          switchEl.dataset.checked = enabled ? 'true' : 'false';
+          if (enabled) {
+            switchEl.classList.add('checked');
+          } else {
+            switchEl.classList.remove('checked');
+          }
+        }
+      });
+    }
+
+    function updateAllIcons() {
+      const theme = getTheme();
+
+      // Update toggle button icons
+      containers.forEach((container) => {
+        const toggle = container.querySelector('.theme-toggle');
+        if (!toggle) return;
+
+        const normalIcon = toggle.querySelector('.theme-icon-normal');
+        const contrastDarkIcon = toggle.querySelector('.theme-icon-contrast-dark');
+        const contrastLightIcon = toggle.querySelector('.theme-icon-contrast-light');
+
+        // Hide all icons first
+        normalIcon?.classList.add('hidden');
+        contrastDarkIcon?.classList.add('hidden');
+        contrastLightIcon?.classList.add('hidden');
+
+        // Show appropriate icon
+        if (theme === 'high-contrast') {
+          contrastDarkIcon?.classList.remove('hidden');
+        } else if (theme === 'high-contrast-light') {
+          contrastLightIcon?.classList.remove('hidden');
+        } else {
+          normalIcon?.classList.remove('hidden');
+        }
+      });
+
+      // Update checkmarks in all dropdowns (now in body)
+      document.querySelectorAll('.theme-option').forEach((option) => {
+        const checkIcon = option.querySelector('.check-icon');
+        if ((option as HTMLElement).dataset.themeValue === theme) {
+          checkIcon?.classList.remove('hidden');
+        } else {
+          checkIcon?.classList.add('hidden');
+        }
+      });
+    }
+
+    function closeAllDropdowns() {
+      // Close all dropdowns (now in body)
+      document.querySelectorAll('.theme-dropdown').forEach((dropdown) => {
+        dropdown.classList.add('opacity-0', 'invisible');
+        dropdown.classList.remove('opacity-100', 'visible');
+      });
+      // Reset all toggle buttons
+      containers.forEach((container) => {
+        const toggle = container.querySelector('.theme-toggle');
+        const arrow = toggle?.querySelector('.dropdown-arrow');
+        toggle?.setAttribute('aria-expanded', 'false');
+        arrow?.classList.remove('rotate-180');
+      });
+    }
+
+    function positionDropdown(toggle: Element, dropdown: HTMLElement) {
+      const rect = toggle.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const dropdownWidth = dropdown.offsetWidth || 160;
+
+      // Position below the toggle button
+      dropdown.style.top = `${rect.bottom + 8}px`;
+
+      // Align left edge of dropdown with left edge of button
+      let left = rect.left;
+
+      // If dropdown would go off right edge, align to right edge of button instead
+      if (left + dropdownWidth > viewportWidth - 8) {
+        left = rect.right - dropdownWidth;
+      }
+
+      // Final check: ensure not off left edge
+      if (left < 8) {
+        left = 8;
+      }
+
+      dropdown.style.left = `${left}px`;
+    }
+
+    containers.forEach((container) => {
+      const toggle = container.querySelector('.theme-toggle');
+      const dropdown = container.querySelector('.theme-dropdown') as HTMLElement;
+      const arrow = toggle?.querySelector('.dropdown-arrow');
+      const options = container.querySelectorAll('.theme-option');
+
+      if (!toggle || !dropdown) return;
+
+      // Prevent adding multiple listeners
+      if ((container as HTMLElement).dataset.initialized) return;
+      (container as HTMLElement).dataset.initialized = 'true';
+
+      // Move dropdown to body to escape backdrop-filter container
+      if (dropdown.parentElement !== document.body) {
+        document.body.appendChild(dropdown);
+      }
+
+      // Toggle dropdown on button click
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('opacity-100');
+
+        // Close all other dropdowns first
+        closeAllDropdowns();
+
+        if (!isOpen) {
+          // Disable transition, position, then re-enable to prevent flying animation
+          dropdown.style.transition = 'none';
+          positionDropdown(toggle, dropdown);
+          // Force reflow to apply position before transition
+          dropdown.offsetHeight;
+          dropdown.style.transition = '';
+
+          dropdown.classList.remove('opacity-0', 'invisible');
+          dropdown.classList.add('opacity-100', 'visible');
+          toggle.setAttribute('aria-expanded', 'true');
+          arrow?.classList.add('rotate-180');
+        }
+      });
+
+      // Handle option selection with transition
+      options.forEach((option) => {
+        option.addEventListener('click', () => {
+          const newTheme = (option as HTMLElement).dataset.themeValue as 'normal' | 'high-contrast' | 'high-contrast-light';
+          const currentTheme = getTheme();
+
+          // Only show transition if actually changing themes
+          if (newTheme === currentTheme) {
+            closeAllDropdowns();
+            return;
+          }
+
+          // Close dropdown immediately before showing overlay
+          closeAllDropdowns();
+
+          // Create and show transition overlay
+          const overlay = document.createElement('div');
+          overlay.id = 'theme-transition-overlay';
+          overlay.innerHTML = `
+            <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:999998;"></div>
+            <div style="position:fixed;top:50vh;left:50vw;transform:translate(-50%,-50%);z-index:999999;display:flex;flex-direction:column;align-items:center;gap:16px;">
+              <div class="theme-spinner"></div>
+              <p class="theme-overlay-text">Changing theme...</p>
+            </div>
+          `;
+          overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:999997;opacity:0;transition:opacity 300ms ease;';
+
+          // Add spinner and text styles if not exists (with !important to override ALL theme rules)
+          if (!document.getElementById('theme-spin-style')) {
+            const style = document.createElement('style');
+            style.id = 'theme-spin-style';
+            style.textContent = `
+              @keyframes theme-spin{to{transform:rotate(360deg)}}
+              #theme-transition-overlay .theme-spinner,
+              [data-theme] #theme-transition-overlay .theme-spinner,
+              [data-theme="normal"] #theme-transition-overlay .theme-spinner,
+              [data-theme="high-contrast"] #theme-transition-overlay .theme-spinner,
+              [data-theme="high-contrast-light"] #theme-transition-overlay .theme-spinner {
+                animation: theme-spin 1s linear infinite !important;
+                animation-duration: 1s !important;
+                animation-iteration-count: infinite !important;
+                width: 48px !important;
+                height: 48px !important;
+                border: 4px solid rgba(255,255,255,0.3) !important;
+                border-top-color: #fff !important;
+                border-radius: 50% !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+              }
+              #theme-transition-overlay .theme-overlay-text,
+              [data-theme] #theme-transition-overlay .theme-overlay-text,
+              [data-theme="normal"] #theme-transition-overlay .theme-overlay-text,
+              [data-theme="high-contrast"] #theme-transition-overlay .theme-overlay-text,
+              [data-theme="high-contrast-light"] #theme-transition-overlay .theme-overlay-text {
+                color: #ffffff !important;
+                font-size: 18px !important;
+                font-weight: 500 !important;
+                margin: 0 !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                text-align: center !important;
+                background: transparent !important;
+                text-shadow: none !important;
+              }
+            `;
+            document.head.appendChild(style);
+          }
+
+          document.body.appendChild(overlay);
+
+          // Force reflow then fade in
+          overlay.offsetHeight;
+          overlay.style.opacity = '1';
+
+          const startTime = Date.now();
+          const minDuration = 1000; // Minimum 1 second
+          const bufferAfterChange = 400; // Wait after theme change for re-renders
+
+          // Change theme after fade-in
+          setTimeout(() => {
+            setTheme(newTheme);
+            updateAllIcons();
+
+            // Close info menu and mobile menu if open
+            const infoMenu = document.getElementById('info-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const infoToggle = document.getElementById('info-menu-toggle');
+            const mobileToggle = document.getElementById('mobile-menu-toggle');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            const infoIcon = document.getElementById('info-icon');
+            const infoCloseIcon = document.getElementById('info-close-icon');
+            const nav = document.getElementById('main-nav');
+
+            if (infoMenu && infoMenu.style.maxHeight && infoMenu.style.maxHeight !== '0px') {
+              infoMenu.style.maxHeight = '0';
+              infoMenu.setAttribute('aria-hidden', 'true');
+              infoToggle?.setAttribute('aria-expanded', 'false');
+              infoIcon?.classList.remove('hidden');
+              infoCloseIcon?.classList.add('hidden');
+            }
+
+            if (mobileMenu && mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px') {
+              mobileMenu.style.maxHeight = '0';
+              mobileMenu.setAttribute('aria-hidden', 'true');
+              mobileToggle?.setAttribute('aria-expanded', 'false');
+              hamburgerIcon?.classList.remove('hidden');
+              closeIcon?.classList.add('hidden');
+              nav?.classList.remove('menu-expanded');
+            }
+
+            // Calculate how long to keep overlay visible
+            const elapsed = Date.now() - startTime;
+            const remainingForMin = Math.max(0, minDuration - elapsed);
+            const hideDelay = Math.max(remainingForMin, bufferAfterChange);
+
+            // Remove overlay
+            setTimeout(() => {
+              overlay.style.opacity = '0';
+              setTimeout(() => {
+                overlay.remove();
+              }, 300);
+            }, hideDelay);
+          }, 300);
+        });
+      });
+
+      // Handle animations toggle (don't close dropdown)
+      const animationsToggle = dropdown.querySelector('.animations-toggle');
+      if (animationsToggle) {
+        animationsToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const enabled = getAnimationsEnabled();
+          setAnimationsEnabled(!enabled);
+          updateAnimationsToggle();
+        });
+      }
+
+      // Handle sounds toggle (don't close dropdown)
+      const soundsToggle = dropdown.querySelector('.sounds-toggle');
+      if (soundsToggle) {
+        soundsToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const enabled = getSoundsEnabled();
+          setSoundsEnabled(!enabled);
+          updateSoundsToggle();
+        });
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as Element;
+      if (!target.closest('.theme-toggle-container')) {
+        closeAllDropdowns();
+      }
+    });
+
+    // Close dropdown on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAllDropdowns();
+      }
+    });
+
+    // Only add window listener once
+    if (!(window as any).__themeChangeListenerAdded) {
+      (window as any).__themeChangeListenerAdded = true;
+      window.addEventListener('theme-change', updateAllIcons);
+      window.addEventListener('animations-change', updateAnimationsToggle);
+      window.addEventListener('sounds-change', updateSoundsToggle);
+    }
+
+    // Initial state
+    updateAllIcons();
+    updateAnimationsToggle();
+    updateSoundsToggle();
+  }
+
+  initThemeToggles();
+  document.addEventListener('astro:after-swap', () => {
+    // Reset initialized flags on page swap
+    document.querySelectorAll('.theme-toggle-container').forEach((container) => {
+      delete (container as HTMLElement).dataset.initialized;
+    });
+    (window as any).__themeChangeListenerAdded = false;
+    initThemeToggles();
+  });
+</script>
