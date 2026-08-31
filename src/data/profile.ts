@@ -1,11 +1,11 @@
 export const profile = {
   name: 'Tushar Chauhan',
-  title: 'B.Tech CSE Student | Aspiring Full Stack Developer | DevOps Learner',
+  title: 'B.Tech CSE Student | Full Stack Developer | DSA Enthusiast | Building Real-World Software & IoT Solutions',
   location: 'Punjab, India',
-  tagline: 'Building practical software, solving problems, and growing as a developer every day.',
+  tagline: 'B.Tech CSE Student | Full Stack Developer | DSA Enthusiast | Building Real-World Software & IoT Solutions',
   description:
-    'Computer Science student at Lovely Professional University focused on Full Stack Development, Data Structures & Algorithms, and DevOps.',
-  bio: `I am a Computer Science student at Lovely Professional University with a strong interest in Full Stack Development, Data Structures & Algorithms, and DevOps. I enjoy building practical software solutions, participating in hackathons, and continuously improving my problem-solving and development skills.`,
+    'Computer Science student passionate about Full Stack Development, Data Structures & Algorithms, DevOps, and building real-world software and IoT solutions. Experienced in building interactive web applications, IoT projects, and continuously improving problem-solving skills through DSA and competitive programming.',
+  bio: `Computer Science student passionate about Full Stack Development, Data Structures & Algorithms, DevOps, and building real-world software and IoT solutions. Experienced in building interactive web applications, IoT projects, and continuously improving problem-solving skills through DSA and competitive programming.`,
 
   availability: ['Open to Internships', 'Hackathons & Collaborations'],
 
@@ -27,9 +27,9 @@ export const profile = {
     { value: 1, suffix: '', label: 'Certifications' },
   ],
 
-  resumeUrl: '/Tushar-Chauhan-Resume.pdf',
-  photoUrl: '/img/selfie.avif',
-  avatarUrl: '/img/pic.webp',
+  resumeUrl: '/Ashcraft-Leo-Resume.pdf',
+  photoUrl: '/img/tushar-portrait.jpg',
+  avatarUrl: '/img/tushar-portrait.jpg',
 } as const;
 
 export type Profile = typeof profile;
