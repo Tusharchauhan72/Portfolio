@@ -18,6 +18,7 @@ export const profile = {
   social: {
     linkedin: 'https://www.linkedin.com/in/tushar-chauhan-13504536b',
     github: 'https://github.com/Tusharchauhan72',
+    leetcode: 'https://leetcode.com/u/Tusharchauhan32/',
   },
 
   stats: [

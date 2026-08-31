@@ -37,6 +37,7 @@ const mailtoLink = getMailtoLink(profile);
       <div id="social-icons-inline" class="social-icons-inline hidden items-center gap-2">
         <SocialLink platform="github" href={profile.social.github} />
         <SocialLink platform="linkedin" href={profile.social.linkedin} />
+        <SocialLink platform="leetcode" href={profile.social.leetcode} />
         <SocialLink platform="email" href={mailtoLink} />
       </div>
     </div>
@@ -47,6 +48,7 @@ const mailtoLink = getMailtoLink(profile);
       <div id="social-icons-desktop" class="social-icons-desktop hidden items-center gap-2">
         <SocialLink platform="github" href={profile.social.github} />
         <SocialLink platform="linkedin" href={profile.social.linkedin} />
+        <SocialLink platform="leetcode" href={profile.social.leetcode} />
         <SocialLink platform="email" href={mailtoLink} />
       </div>
 
@@ -98,6 +100,7 @@ const mailtoLink = getMailtoLink(profile);
       <div class="flex items-center justify-center gap-4 py-4">
         <SocialLink platform="github" href={profile.social.github} size="lg" />
         <SocialLink platform="linkedin" href={profile.social.linkedin} size="lg" />
+        <SocialLink platform="leetcode" href={profile.social.leetcode} size="lg" />
         <SocialLink platform="email" href={mailtoLink} size="lg" />
         <div class="border-l border-gray-600 h-8 mx-2"></div>
         <ThemeToggle />

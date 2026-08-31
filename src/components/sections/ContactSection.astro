@@ -149,11 +149,27 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
         <!-- Social Links -->
         <div class="contact-social flex gap-4">
           <a
+            href={profile.social.github}
+            target="_blank"
+            rel="me noopener noreferrer"
+            class="social-link w-12 h-12 rounded-xl bg-neon-pink/10 border border-neon-pink/20 flex items-center justify-center text-gray-400 hover:bg-neon-pink/20 hover:text-neon-pink hover:border-neon-pink/40 transition-all"
+            aria-label="GitHub Profile"
+            title="GitHub Profile"
+          >
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              ></path>
+            </svg>
+          </a>
+
+          <a
             href={profile.social.linkedin}
             target="_blank"
             rel="me noopener noreferrer"
             class="social-link w-12 h-12 rounded-xl bg-neon-pink/10 border border-neon-pink/20 flex items-center justify-center text-gray-400 hover:bg-neon-pink/20 hover:text-neon-pink hover:border-neon-pink/40 transition-all"
-            aria-label="Connect on LinkedIn"
+            aria-label="LinkedIn Profile"
+            title="LinkedIn Profile"
           >
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -163,15 +179,16 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
           </a>
 
           <a
-            href={profile.social.github}
+            href={profile.social.leetcode}
             target="_blank"
             rel="me noopener noreferrer"
-            class="social-link w-12 h-12 rounded-xl bg-neon-pink/10 border border-neon-pink/20 flex items-center justify-center text-gray-400 hover:bg-neon-pink/20 hover:text-neon-pink hover:border-neon-pink/40 transition-all"
-            aria-label="Follow on GitHub"
+            class="social-link w-12 h-12 rounded-xl bg-neon-pink/10 border border-neon-pink/20 flex items-center justify-center text-gray-400 hover:bg-neon-pink/20 hover:text-neon-yellow hover:border-neon-yellow/40 transition-all"
+            aria-label="LeetCode Profile"
+            title="LeetCode Profile"
           >
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path
-                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a4.57 4.57 0 0 0-3.25-1.332 4.57 4.57 0 0 0-3.25 1.332l-4.319 4.38c-.868.868-1.347 2.047-1.347 3.275s.479 2.407 1.347 3.275l4.332 4.363c.868.868 2.047 1.347 3.275 1.347s2.407-.479 3.275-1.347l2.609-2.636c.514-.514.496-1.365-.039-1.901-.535-.535-1.386-.553-1.9-.038zM20.811 13.01H10.666c-.727 0-1.316.589-1.316 1.316 0 .727.589 1.316 1.316 1.316h10.145c.727 0 1.316-.589 1.316-1.316 0-.727-.589-1.316-1.316-1.316z"
               ></path>
             </svg>
           </a>
