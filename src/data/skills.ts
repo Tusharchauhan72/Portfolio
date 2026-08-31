@@ -67,61 +67,37 @@ export const services = [
   {
     title: 'Full Stack Web Development',
     description:
-      'Building <span class="hover-underline-trigger">responsive, modern web applications</span> using clean HTML, CSS, JavaScript, and database backends like Firebase and MySQL. Focused on intuitive UI/UX and efficient code structure.',
+      'Building <span class="hover-underline-trigger">responsive, modern web applications</span> using React, clean HTML, CSS, JavaScript, and database backends like Firebase and MySQL. Focused on intuitive UI/UX and efficient code structure.',
     icon: 'code',
     features: [
-      'Responsive Web Interfaces',
+      'React & Modern Frontend Layouts',
       'Firebase Backend Integration',
       'Database Modeling (MySQL)',
-      'Modern Frontend Layouts',
+      'Responsive Web Interfaces',
     ],
   },
   {
-    title: 'Data Structures & Problem Solving',
+    title: 'Data Structures & Algorithms',
     description:
       'Applying strong algorithmic thinking and <span class="hover-underline-trigger">optimized C++ data structures</span> to solve complex computational problems and build efficient software routines.',
     icon: 'puzzle',
     features: [
       'C++ Algorithmic Problem Solving',
       'Time & Space Complexity Optimization',
-      'Pattern-Based Learning',
+      'Pattern-Based Problem Solving',
       'Competitive Coding Practice',
     ],
   },
   {
-    title: 'DevOps & Version Control',
+    title: 'DevOps & IoT Fundamentals',
     description:
-      'Utilizing <span class="hover-underline-trigger">Git and GitHub workflows</span> for clean code management, collaborative version control, and learning continuous delivery principles.',
+      'Utilizing <span class="hover-underline-trigger">Git and GitHub workflows</span> for clean code management, DevOps CI/CD fundamentals, and IoT development concepts.',
     icon: 'cloud',
     features: [
       'Git Workflow & GitHub Actions',
-      'Repository Structure & Docs',
+      'DevOps Fundamentals & CI/CD',
+      'IoT Development Concepts',
       'Linux Command Line Basics',
-      'DevOps CI/CD Concepts',
-    ],
-  },
-  {
-    title: 'AgroGuard Smart Agriculture System',
-    description:
-      'Designed and developed an IoT-based smart agriculture monitoring system using ESP32, soil moisture sensors, DHT11 temperature & humidity sensor, ultrasonic sensor, and relay-controlled water pump.<br/><br/>The system helps farmers monitor field conditions in real time, automatically detects low soil moisture levels, starts irrigation when needed, and turns the water pump off once sufficient moisture is reached. It can also detect nearby movement or obstacles and provides environmental insights for smarter farming decisions.',
-    icon: 'chip',
-    features: [
-      'Real-time soil moisture monitoring',
-      'Automatic irrigation control',
-      'Auto ON/OFF water pump using relay',
-      'Temperature & humidity tracking',
-      'Ultrasonic-based object detection',
-      'ESP32 microcontroller integration',
-      'Smart farming automation',
-    ],
-    techStack: [
-      'ESP32',
-      'DHT11',
-      'Soil Moisture Sensor',
-      'Ultrasonic Sensor',
-      'Relay Module',
-      'Embedded Systems',
-      'IoT',
     ],
   },
 ];

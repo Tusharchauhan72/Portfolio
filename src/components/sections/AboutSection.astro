@@ -13,50 +13,7 @@ import Icon from '../ui/Icon.astro';
   <!-- Floating Arcade Decorations -->
   <ArcadeDecorations variant="about" />
 
-  <div class="max-w-6xl mx-auto relative z-10">
-    {/* Skills Section - COMMENTED OUT
-    <div class="mb-20">
-      <h3 class="text-2xl font-bold text-white text-center mb-8">
-        {site.sections.about.skillsTitle} <span class="gradient-text">{site.sections.about.skillsTitleHighlight}</span>
-      </h3>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        {
-          skills.map((category) => (
-            <div class="card">
-              <p class="text-lg font-semibold text-white mb-4">
-                {category.name}
-              </p>
-              <div class="space-y-3">
-                {category.skills.slice(0, 5).map((skill) => (
-                  <div>
-                    <div class="flex justify-between text-sm mb-1">
-                      <span class="text-gray-300">{skill.name}</span>
-                      <span class="text-neon-pink">{skill.level}%</span>
-                    </div>
-                    <div class="h-2 bg-night-700/50 rounded-full overflow-hidden border border-neon-pink/20">
-                      <div
-                        class="h-full bg-gradient-to-r from-neon-pink via-neon-purple to-neon-orange rounded-full transition-all duration-1000"
-                        style={`width: ${skill.level}%; box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);`}
-                        role="progressbar"
-                        aria-valuenow={skill.level}
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        aria-label={`${skill.name}: ${skill.level}%`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-    */}
-  </div>
-
-  <!-- Services Section — full width, outside max-w-6xl -->
+  <!-- Services / About Section -->
   <div class="services-section relative z-10">
     <div class="services-container services-hscroll">
       <!-- Section Header pinned inside the sticky container -->
@@ -70,188 +27,78 @@ import Icon from '../ui/Icon.astro';
       </div>
 
       <div class="services-hscroll-track">
-        {/* Web & Software Development */}
+        {/* Full Stack Web Development */}
         <div class="service-panel">
-        <div class="card card-highlighted group service-card service-first">
-          <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
-            <svg class="w-6 h-6 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-            </svg>
-          </div>
-          <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[0].title}>{services[0].title}</p>
-          <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[0].description}></p>
-          <ul class="service-features space-y-2">
-            {services[0].features.map((feature, index) => (
-              <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
-                <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
-                <span class="feature-text">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        </div>
-
-        {/* AgroGuard Smart Agriculture System */}
-        {services[3] && (
-          <div class="service-panel">
-          <div class="card card-highlighted group relative overflow-hidden service-card service-mid-0">
-            <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-green/20 to-neon-cyan/20 flex items-center justify-center mb-4 group-hover:from-neon-green/30 group-hover:to-neon-cyan/30 transition-colors border border-neon-green/20">
-              <svg
-                class="w-6 h-6 text-neon-green"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-                />
+          <div class="card card-highlighted group service-card service-first">
+            <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
+              <svg class="w-6 h-6 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </svg>
             </div>
-            <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[3].title}>{services[3].title}</p>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Left Column: Description, Features, Tech Stack */}
-              <div class="lg:col-span-7 space-y-4">
-                <p class="service-desc text-gray-300 text-[16px] leading-relaxed" set:html={services[3].description}></p>
-
-                {/* Key Features */}
-                {services[3].features && (
-                  <div>
-                    <p class="text-neon-cyan font-mono text-xs font-semibold mb-2 uppercase tracking-wider">Key Features</p>
-                    <ul class="service-features grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {services[3].features.map((feature, index) => (
-                        <li class="feature-item flex items-center gap-2 text-[14px] text-gray-300" style={`--feature-index: ${index}`}>
-                          <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
-                          <span class="feature-text">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Tech Stack */}
-                {services[3].techStack && (
-                  <div>
-                    <p class="text-neon-pink font-mono text-xs font-semibold mb-2 uppercase tracking-wider">Tech Stack</p>
-                    <div class="flex flex-wrap gap-2">
-                      {services[3].techStack.map((tech) => (
-                        <span class="px-2.5 py-1 text-xs bg-night-700/80 text-neon-cyan border border-neon-cyan/20 rounded-full font-mono">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Right Column: AgroGuard Hardware Image */}
-              <div class="lg:col-span-5 flex flex-col items-center justify-center">
-                <button
-                  type="button"
-                  class="logo-item logo-thumbnail w-full group/img relative rounded-xl overflow-hidden border border-neon-cyan/30 hover:border-neon-cyan/60 transition-all cursor-pointer shadow-lg hover:shadow-neon-cyan/20"
-                  data-src="/img/portfolio/agroguard-hardware.jpg"
-                  data-alt="AgroGuard Smart Agriculture System Hardware Prototype"
-                >
-                  <img
-                    src="/img/portfolio/agroguard-hardware.jpg"
-                    alt="AgroGuard Smart Agriculture System Hardware Prototype"
-                    class="w-full h-48 lg:h-64 object-contain bg-night-900/60 p-1 group-hover/img:scale-105 transition-transform duration-300"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-night-900/90 via-night-900/20 to-transparent flex items-end justify-center p-3">
-                    <span class="text-xs text-neon-cyan font-mono flex items-center gap-1">
-                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                      </svg>
-                      Click to view full prototype
-                    </span>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            <!-- Image Modal - inside card -->
-            <div id="logo-modal" class="absolute inset-0 z-20 hidden items-center justify-center bg-black/90 backdrop-blur-sm rounded-2xl p-4">
-              <button id="modal-close" class="absolute top-2 right-2 z-30 text-white text-[3rem] leading-none hover:text-neon-pink transition-colors w-12 h-12 flex items-center justify-center pb-1">&times;</button>
-              <img id="modal-image" src="" alt="" class="max-h-[85vh] max-w-[90%] object-contain rounded-lg border border-neon-cyan/30 shadow-2xl" />
-            </div>
+            <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[0].title}>{services[0].title}</p>
+            <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[0].description}></p>
+            <ul class="service-features space-y-2">
+              {services[0].features.map((feature, index) => (
+                <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
+                  <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                  <span class="feature-text">{feature}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          </div>
-        )}
+        </div>
 
-        {/* CRM & Integration */}
+        {/* Data Structures & Algorithms */}
         <div class="service-panel">
-        <div class="card card-highlighted group service-card service-mid-1">
-          <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
-            <svg
-              class="w-6 h-6 text-neon-orange"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
-              />
-            </svg>
+          <div class="card card-highlighted group service-card service-mid-0">
+            <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-cyan/20 flex items-center justify-center mb-4 group-hover:from-neon-purple/30 group-hover:to-neon-cyan/30 transition-colors border border-neon-purple/20">
+              <svg class="w-6 h-6 text-neon-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
+            </div>
+            <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[1].title}>{services[1].title}</p>
+            <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[1].description}></p>
+            <ul class="service-features space-y-2">
+              {services[1].features.map((feature, index) => (
+                <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
+                  <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                  <span class="feature-text">{feature}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[2].title}>{services[2].title}</p>
-          <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[2].description}></p>
-          <ul class="service-features space-y-2">
-            {services[2].features.map((feature, index) => (
-              <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
-                <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
-                <span class="feature-text">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
         </div>
 
-        {/* Cloud Solutions */}
+        {/* DevOps & IoT Fundamentals */}
         <div class="service-panel">
-        <div class="card card-highlighted group service-card service-last">
-          <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center mb-4 group-hover:from-neon-pink/30 group-hover:to-neon-purple/30 transition-colors border border-neon-pink/20">
-            <svg
-              class="w-6 h-6 text-neon-yellow"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
-              />
-            </svg>
+          <div class="card card-highlighted group service-card service-last">
+            <div class="service-icon service-icon-anim w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-yellow/20 flex items-center justify-center mb-4 group-hover:from-neon-cyan/30 group-hover:to-neon-yellow/30 transition-colors border border-neon-cyan/20">
+              <svg class="w-6 h-6 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+              </svg>
+            </div>
+            <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[2].title}>{services[2].title}</p>
+            <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[2].description}></p>
+            <ul class="service-features space-y-2">
+              {services[2].features.map((feature, index) => (
+                <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
+                  <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
+                  <span class="feature-text">{feature}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <p class="service-card-title text-[24px] font-semibold text-white mb-2" data-title={services[1].title}>{services[1].title}</p>
-          <p class="service-desc text-gray-400 text-[18px] mb-4" set:html={services[1].description}></p>
-          <ul class="service-features space-y-2">
-            {services[1].features.map((feature, index) => (
-              <li class="feature-item flex items-center gap-2 text-[18px] text-gray-300" style={`--feature-index: ${index}`}>
-                <Icon name="checkmark" size="sm" class="text-neon-green shrink-0" />
-                <span class="feature-text">{feature}</span>
-              </li>
-            ))}
-          </ul>
         </div>
-        </div>
-        </div>{/* end .services-hscroll-track */}
+      </div>{/* end .services-hscroll-track */}
 
-        {/* Panel indicator dots */}
-        <div class="hscroll-indicators">
-          {services.map((_, i) => (
-            <button class={`hscroll-dot${i === 0 ? ' active' : ''}`} data-panel={i} aria-label={`Go to service ${i + 1}`}></button>
-          ))}
-        </div>
+      {/* Panel indicator dots */}
+      <div class="hscroll-indicators">
+        {services.map((_, i) => (
+          <button class={`hscroll-dot${i === 0 ? ' active' : ''}`} data-panel={i} aria-label={`Go to service ${i + 1}`}></button>
+        ))}
       </div>
     </div>
+  </div>
 </section>
 
 <script>

@@ -8,7 +8,7 @@ export const site = {
     about: {
       title: 'About',
       titleHighlight: 'Me',
-      subtitle: 'B.Tech CSE student passionate about Web Dev & Problem Solving',
+      subtitle: 'Full Stack Development || Data Structures & Algorithms || Problem Solving || Real-World Software Solutions',
       availabilityText: 'Open to internships & hackathons',
       skillsTitle: 'Technical',
       skillsTitleHighlight: 'Skills',

@@ -11,8 +11,8 @@ export const profile = {
 
   // Anti-spam contact structure
   contact: {
-    phone: { area: '', number: '' },
-    email: { user: 'nahcuhahsruht', website: 'moc.liamg' },
+    phone: { area: '19+', number: '1836791799' },
+    email: { user: '2527nahuahcrahsut', website: 'moc.liamg' },
   },
 
   social: {

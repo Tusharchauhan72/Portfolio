@@ -108,7 +108,7 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
             <div>
               <p class="text-gray-400 text-sm">Phone</p>
               <a
-                href={`tel:${phone.replace(/[^0-9]/g, '')}`}
+                href={`tel:${phone.replace(/\s/g, '')}`}
                 class="text-white hover:text-neon-cyan transition-colors"
               >
                 {phone}
