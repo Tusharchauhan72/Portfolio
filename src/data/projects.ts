@@ -50,10 +50,10 @@ export const projects: Project[] = [
   {
     title: 'CampusConnect',
     description:
-      'A comprehensive campus marketplace and student collaboration platform connecting university students for peer-to-peer trading, academic Q&A, and campus services.',
-    image: '/img/featured/featured-parker.avif',
+      'A dedicated student collaboration and Q&A platform for Lovely Professional University, enabling students to connect, share resources, discuss academics, and access placement-focused content in a centralized campus community.',
+    image: '/img/featured/campusconnect.png',
     tags: ['React', 'Vite', 'Firebase', 'Tailwind CSS', 'JavaScript'],
-    metrics: ['Role: Lead Developer', 'Status: In Development'],
+    metrics: ['Role: Lead Developer', 'LPU Student Community'],
     github: 'https://github.com/Tusharchauhan72',
     live: 'https://campusconnect-brown.vercel.app',
     featured: true,
