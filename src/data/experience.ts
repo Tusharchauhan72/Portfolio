@@ -12,8 +12,8 @@ export const experience: Experience[] = [
   {
     company: 'Lovely Professional University',
     position: 'B.Tech CSE Student & Developer',
-    period: '2024 - Present',
-    startDate: '2024-08',
+    period: '2025 - Present',
+    startDate: '2025-08',
     endDate: 'Current',
     location: 'Punjab, India',
     highlights: [
@@ -38,7 +38,7 @@ export const education: Education[] = [
   {
     institution: 'Lovely Professional University',
     degree: 'Bachelor of Technology (B.Tech) - Computer Science & Engineering',
-    year: '2024 - 2028',
+    year: '2025 - 2029',
     description:
       'Focusing on Computer Science core fundamentals: Data Structures, Object-Oriented Programming, Database Systems, Web Engineering, and DevOps.',
     skills: ['C++', 'C', 'Python', 'JavaScript', 'Data Structures', 'Git'],
