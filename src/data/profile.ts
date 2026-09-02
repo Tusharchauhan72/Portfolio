@@ -28,7 +28,7 @@ export const profile = {
     { value: 1, suffix: '', label: 'Certifications' },
   ],
 
-  resumeUrl: '/Ashcraft-Leo-Resume.pdf',
+  resumeUrl: '/Tushar-Chauhan-Resume.pdf',
   photoUrl: '/img/tushar-portrait.jpg',
   avatarUrl: '/img/tushar-portrait.jpg',
 } as const;

@@ -248,7 +248,16 @@ ${profile.social.linkedin}`;
 
   top: () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    return `⬆️ Jumping to top...`;
+    return `
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 1337 leo       20   0  420.0m  69.0m  42.0m S  99.9  13.37  9001:00 coding
+ 1338 leo       20   0  256.0m  64.0m  32.0m S  42.0   8.00   420:00 debugging
+ 1339 leo       20   0  128.0m  32.0m  16.0m S  25.0   4.00   180:00 coffee
+ 1340 leo       20   0   64.0m  16.0m   8.0m S  10.0   2.00    60:00 meetings
+ 1341 leo       20   0   32.0m   8.0m   4.0m S   5.0   1.00    30:00 stackoverflow
+
+Press 'q' to quit... just kidding, this isn't real top 😄
+⬆️ Jumping to top...`;
   },
 
   bottom: () => {
@@ -484,17 +493,6 @@ Just kidding. This is a portfolio, not a server! 😄`,
  ${new Date().toLocaleTimeString()} up ${Math.floor(Math.random() * 365)} days, ${Math.floor(Math.random() * 24)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')},  1 user,  load average: 0.${Math.floor(Math.random() * 99)}, 0.${Math.floor(Math.random() * 99)}, 0.${Math.floor(Math.random() * 99)}
 
 Actually, I've been coding for ${profile.stats[0].value}+ years. That's the real uptime! 💪
-`,
-
-  top: () => `
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
- 1337 leo       20   0  420.0m  69.0m  42.0m S  99.9  13.37  9001:00 coding
- 1338 leo       20   0  256.0m  64.0m  32.0m S  42.0   8.00   420:00 debugging
- 1339 leo       20   0  128.0m  32.0m  16.0m S  25.0   4.00   180:00 coffee
- 1340 leo       20   0   64.0m  16.0m   8.0m S  10.0   2.00    60:00 meetings
- 1341 leo       20   0   32.0m   8.0m   4.0m S   5.0   1.00    30:00 stackoverflow
-
-Press 'q' to quit... just kidding, this isn't real top 😄
 `,
 
   htop: () => commands.top(),
